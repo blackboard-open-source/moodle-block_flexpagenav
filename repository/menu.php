@@ -46,7 +46,7 @@ class block_flexpagenav_repository_menu {
         $menus   = array();
         $records = $DB->get_recordset('block_flexpagenav_menu', array('courseid' => $courseid), $sort);
         foreach ($records as $record) {
-            $menus[] = $this->to_model($record);
+            $menus[$record->id] = $this->to_model($record);
         }
         $records->close();
 

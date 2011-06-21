@@ -110,4 +110,67 @@ class block_flexpagenav_model_link {
     public function get_configs() {
         return $this->configs;
     }
+
+    /**
+     * @param string $name
+     * @param string $default
+     * @return string
+     */
+    public function get_config($name, $default = '') {
+        foreach ($this->configs as $config) {
+            if ($config->get_name() == $name) {
+                return $config->get_value();
+            }
+        }
+        return $default;
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     * @return block_flexpagenav_model_link
+     */
+    public function set_config($name, $value) {
+        foreach ($this->configs as $config) {
+            if ($config->get_name() == $name) {
+                $config->set_value($value);
+                return $this;
+            }
+        }
+        $config = new block_flexpagenav_model_link_config();
+        $config->set_linkid($this->get_id())
+               ->set_name($name)
+               ->set_value($value);
+
+        $this->add_config($config);
+
+        return $this;
+    }
+
+    /**
+     * @param block_flexpagenav_model_link_config $config
+     * @return block_flexpagenav_model_link
+     */
+    public function add_config(block_flexpagenav_model_link_config $config) {
+        $this->configs[] = $config;
+        return $this;
+    }
+
+    /**
+     * Loads the model's corresponding link type class
+     *
+     * @throws coding_exception
+     * @return block_flexpagenav_lib_link_abstract
+     */
+    public function load_type() {
+        $type = $this->get_type();
+        if (empty($type)) {
+            throw new coding_exception('Cannot load link type because type has not been set');
+        }
+        /** @var $linktype block_flexpagenav_lib_link_abstract */
+        $linktype = mr_helper::get('blocks/flexpagenav')->load("lib/link/$type");
+        $linktype->set_link($this);
+
+        return $linktype;
+    }
 }

@@ -30,11 +30,7 @@ M.format_flexpage.init_managemenus = function(Y, url) {
     });
 
     M.format_flexpage.populate_panel(Y, panel, url, function(args) {
-        // View port height minus overlay's view port padding minus fudge factor
-        var height = YAHOO.util.Dom.getViewportHeight() - (YAHOO.widget.Overlay.VIEWPORT_OFFSET * 2) - 60;
-
-        Y.one('#managemenuspanel .bd').setStyle('maxHeight', height + 'px')
-                                      .setStyle('overflow', 'auto');
+        M.format_flexpage.constrain_panel_to_viewport(Y, panel);
 
         var addButton = new YAHOO.widget.Button('addmenu');
         addButton.on("click", function (e) {
@@ -46,7 +42,7 @@ M.format_flexpage.init_managemenus = function(Y, url) {
 
         Y.all('select.block_flexpagenav_actions_select').each(function(node) {
             M.format_flexpage.init_action_menu(Y, node, panel, function() {
-                M.format_flexpage.init_managemenus(Y, url);
+                return M.format_flexpage.init_managemenus(Y, url);
             });
         });
     });
@@ -69,6 +65,84 @@ M.format_flexpage.init_editmenu = function(Y, url) {
     ]);
 
     M.format_flexpage.populate_panel(Y, dialog, url);
+
+    return dialog;
+};
+
+/**
+ * Init manage links modal (this opens other modals)
+ *
+ * @param Y
+ * @param url
+ */
+M.format_flexpage.init_managelinks = function(Y, url) {
+
+    var panel = M.format_flexpage.init_default_dialog(Y, "managelinkspanel");
+
+    // Customize buttons
+    panel.cfg.queueProperty("buttons", []);
+
+    M.format_flexpage.populate_panel(Y, panel, url, function() {
+        M.format_flexpage.constrain_panel_to_viewport(Y, panel);
+
+        var button = M.format_flexpage.init_action_menu(Y, Y.one('select.block_flexpagenav_addlink_select'), panel, function() {
+            return M.format_flexpage.init_managelinks(Y, url);
+        });
+        button.set('label', M.str.block_flexpagenav.addlinkdotdotdot);
+
+        Y.all('select.block_flexpagenav_actions_select').each(function(node) {
+            M.format_flexpage.init_action_menu(Y, node, panel, function() {
+                return M.format_flexpage.init_managelinks(Y, url);
+            });
+        });
+    });
+
+    return panel;
+};
+
+/**
+ * Init edit link modal
+ *
+ * @param Y
+ * @param url
+ */
+M.format_flexpage.init_editlink = function(Y, url) {
+    var dialog = M.format_flexpage.init_default_dialog(Y, "editlinkpanel");
+
+    // Customize buttons
+    dialog.cfg.queueProperty("buttons", [
+        { text: M.str.moodle.savechanges, handler: dialog.submit, isDefault: true }
+    ]);
+
+    M.format_flexpage.populate_panel(Y, dialog, url, function(type) {
+        switch (type) {
+            case 'url':
+                // Have required fields
+                dialog.validate = function() {
+                    var data   = this.getData();
+                    var failed = false;
+                    if (data.label == "" || data.label == undefined) {
+                        Y.one('.format_flexpage_form input[name="label"]').addClass('format_flexpage_error_bg');
+                        failed = true;
+                    }
+                    if (data.url == "" || data.url == undefined) {
+                        Y.one('.format_flexpage_form input[name="url"]').addClass('format_flexpage_error_bg');
+                        failed = true;
+                    }
+                    if (failed) {
+                        M.format_flexpage.init_error_dialog(Y, M.str.block_flexpagenav.labelurlrequired);
+                        return false;
+                    }
+                    return true;
+                };
+
+                // Clears any validation error coloring
+                Y.all('.format_flexpage_form input[type="text"]').on('focus', function(e) {
+                    e.target.removeClass('format_flexpage_error_bg');
+                });
+                break;
+        }
+    });
 
     return dialog;
 };
