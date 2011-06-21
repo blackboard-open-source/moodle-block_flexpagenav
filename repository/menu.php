@@ -83,4 +83,25 @@ class block_flexpagenav_repository_menu {
         }
         return $this;
     }
+
+    /**
+     * @param block_flexpagenav_model_menu $menu
+     * @return void
+     */
+    public function delete_menu(block_flexpagenav_model_menu $menu) {
+        global $DB;
+
+        $DB->execute('
+            DELETE c
+              FROM {block_flexpagenav_link} l
+        INNER JOIN {block_flexpagenav_config} c ON l.id = c.linkid
+             WHERE l.menuid = ?
+        ', array($menu->get_id()));
+
+        $DB->delete_records('block_flexpagenav_link', array('menuid' => $menu->get_id()));
+        $DB->delete_records('block_flexpagenav_menu', array('id' => $menu->get_id()));
+
+        $menu->set_id(null)
+             ->set_links(array());
+    }
 }

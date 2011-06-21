@@ -35,8 +35,12 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
             ),
             'strings' => array(
                 array('savechanges'),
+                array('cancel'),
                 array('addlinkdotdotdot', 'block_flexpagenav'),
                 array('labelurlrequired', 'block_flexpagenav'),
+                array('movelink', 'block_flexpagenav'),
+                array('deletelink', 'block_flexpagenav'),
+                array('deletemenu', 'block_flexpagenav'),
             )
         );
     }
@@ -64,7 +68,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
      * @return string
      */
     public function manage_menus(moodle_url $url, array $menus) {
-        $actions = array('editmenu', 'managelinks', 'delete');
+        $actions = array('editmenu', 'managelinks', 'deletemenu');
 
         $output = html_writer::empty_tag('input', array('id' => 'addmenu', 'type' => 'button', 'value' => get_string('addmenudotdotdot', 'block_flexpagenav')));
 
@@ -125,6 +129,18 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
                            ->add_new_cell(html_writer::checkbox('useastab', 1, ($menu->get_useastab() == 1), '', array('id' => 'id_useastab')));
 
         return $this->form_wrapper($submiturl, $box);
+    }
+
+    /**
+     * Delete link modal
+     *
+     * @param moodle_url $submiturl
+     * @param block_flexpagenav_model_menu $menu
+     * @return string
+     */
+    public function delete_menu(moodle_url $submiturl, block_flexpagenav_model_menu $menu) {
+        $areyousure = get_string('areyousuredeletemenu', 'block_flexpagenav', format_string($menu->get_name()));
+        return $this->form_wrapper($submiturl, html_writer::tag('div', $areyousure, array('class' => 'block_flexpagenav_deletemenu')));
     }
 
     /**
@@ -195,5 +211,42 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
             $output .= $this->render($box);
         }
         return $output;
+    }
+
+    /**
+     * Move link modal
+     *
+     * @param moodle_url $submiturl
+     * @param block_flexpagenav_model_link $link
+     * @param block_flexpagenav_model_menu $menu
+     * @return string
+     */
+    public function move_link(moodle_url $submiturl, block_flexpagenav_model_link $link, block_flexpagenav_model_menu $menu) {
+        $box = new course_format_flexpage_lib_box(array('class' => 'block_flexpagenav_movelink'));
+
+        $options = array();
+        foreach ($menu->get_links() as $reflink) {
+            if ($reflink->get_id() == $link->get_id()) {
+                continue;
+            }
+            $options[$reflink->get_id()] = trim(strip_tags($reflink->load_type()->get_info()));
+        }
+        $box->add_new_row()->add_new_cell(get_string('movelinkx', 'block_flexpagenav', $link->load_type()->get_info()))
+                           ->add_new_cell(html_writer::select(block_flexpagenav_model_link::get_move_options(), 'move', block_flexpagenav_model_link::MOVE_AFTER, false))
+                           ->add_new_cell(html_writer::select($options, 'reflinkid', '', false));
+
+        return $this->form_wrapper($submiturl, $box);
+    }
+
+    /**
+     * Delete link modal
+     *
+     * @param moodle_url $submiturl
+     * @param block_flexpagenav_model_link $link
+     * @return string
+     */
+    public function delete_link(moodle_url $submiturl, block_flexpagenav_model_link $link) {
+        $areyousure = get_string('areyousuredeletelink', 'block_flexpagenav', $link->load_type()->get_info());
+        return $this->form_wrapper($submiturl, html_writer::tag('div', $areyousure, array('class' => 'block_flexpagenav_deletelink')));
     }
 }

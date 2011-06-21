@@ -17,14 +17,12 @@ M.format_flexpage.init_flexpagenav_actionbar = function(Y) {};
  * @param url
  */
 M.format_flexpage.init_managemenus = function(Y, url) {
-    // Ensure our flag starts with true
-    M.format_flexpage.require_page_reload = true;
 
     var panel = M.format_flexpage.init_default_panel(Y, "managemenuspanel");
 
     // When the user finally hides the panel, we reload the page
     panel.hideEvent.subscribe(function(e) {
-        if (M.format_flexpage.require_page_reload) {
+        if (M.format_flexpage.panel_stack.length == 0) {
             window.location.reload();
         }
     });
@@ -36,7 +34,7 @@ M.format_flexpage.init_managemenus = function(Y, url) {
         addButton.on("click", function (e) {
             var editMenuPanel = M.format_flexpage.init_editmenu(Y, args.addurl);
             M.format_flexpage.connect_dialogs(Y, panel, editMenuPanel, function() {
-                M.format_flexpage.init_managemenus(Y, url);
+                return M.format_flexpage.init_managemenus(Y, url);
             });
         });
 
@@ -58,10 +56,24 @@ M.format_flexpage.init_managemenus = function(Y, url) {
  */
 M.format_flexpage.init_editmenu = function(Y, url) {
     var dialog = M.format_flexpage.init_default_dialog(Y, "editmenupanel");
+    M.format_flexpage.populate_panel(Y, dialog, url);
+
+    return dialog;
+};
+
+/**
+ * Init delete menu modal
+ *
+ * @param Y
+ * @param url
+ */
+M.format_flexpage.init_deletemenu = function(Y, url) {
+    var dialog = M.format_flexpage.init_default_dialog(Y, "deletemenupanel");
 
     // Customize buttons
     dialog.cfg.queueProperty("buttons", [
-        { text: M.str.moodle.savechanges, handler: dialog.submit, isDefault: true }
+        { text: M.str.moodle.cancel, handler: dialog.cancel },
+        { text: M.str.block_flexpagenav.deletemenu, handler: dialog.submit, isDefault: true }
     ]);
 
     M.format_flexpage.populate_panel(Y, dialog, url);
@@ -109,11 +121,6 @@ M.format_flexpage.init_managelinks = function(Y, url) {
 M.format_flexpage.init_editlink = function(Y, url) {
     var dialog = M.format_flexpage.init_default_dialog(Y, "editlinkpanel");
 
-    // Customize buttons
-    dialog.cfg.queueProperty("buttons", [
-        { text: M.str.moodle.savechanges, handler: dialog.submit, isDefault: true }
-    ]);
-
     M.format_flexpage.populate_panel(Y, dialog, url, function(type) {
         switch (type) {
             case 'url':
@@ -143,6 +150,45 @@ M.format_flexpage.init_editlink = function(Y, url) {
                 break;
         }
     });
+
+    return dialog;
+};
+
+/**
+ * Init move link modal
+ *
+ * @param Y
+ * @param url
+ */
+M.format_flexpage.init_movelink = function(Y, url) {
+    var dialog = M.format_flexpage.init_default_dialog(Y, "movelinkpanel");
+
+    // Customize buttons
+    dialog.cfg.queueProperty("buttons", [
+        { text: M.str.block_flexpagenav.movelink, handler: dialog.submit, isDefault: true }
+    ]);
+
+    M.format_flexpage.populate_panel(Y, dialog, url);
+
+    return dialog;
+};
+
+/**
+ * Init delete link modal
+ *
+ * @param Y
+ * @param url
+ */
+M.format_flexpage.init_deletelink = function(Y, url) {
+    var dialog = M.format_flexpage.init_default_dialog(Y, "deletelinkpanel");
+
+    // Customize buttons
+    dialog.cfg.queueProperty("buttons", [
+        { text: M.str.moodle.cancel, handler: dialog.cancel },
+        { text: M.str.block_flexpagenav.deletelink, handler: dialog.submit, isDefault: true }
+    ]);
+
+    M.format_flexpage.populate_panel(Y, dialog, url);
 
     return dialog;
 };

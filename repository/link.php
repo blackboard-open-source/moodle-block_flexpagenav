@@ -175,6 +175,24 @@ class block_flexpagenav_repository_link {
     }
 
     /**
+     * Delete a link, the passed model has its ID and configs cleared
+     *
+     * @param block_flexpagenav_model_link $link
+     * @return void
+     */
+    public function delete_link(block_flexpagenav_model_link $link) {
+        global $DB;
+
+        $this->remove_link_weight($link);
+
+        $DB->delete_records('block_flexpagenav_link', array('id' => $link->get_id()));
+        $DB->delete_records('block_flexpagenav_config', array('linkid' => $link->get_id()));
+
+        $link->set_id(null)
+             ->set_configs(array());
+    }
+
+    /**
      * Gets the next link weight value
      *
      * @param block_flexpagenav_model_link $link
@@ -187,5 +205,72 @@ class block_flexpagenav_repository_link {
             return $next;
         }
         return 0;
+    }
+
+    /**
+     * Move a link
+     *
+     * @param block_flexpagenav_model_link $link
+     * @param int $move block_flexpagenav_model_link::MOVE_XXX constant
+     * @param int $referencelinkid
+     * @return block_flexpagenav_repository_link
+     */
+    public function move_link(block_flexpagenav_model_link $link, $move, $referencelinkid) {
+        global $DB;
+
+        $reflink = $this->get_link($referencelinkid);
+
+        // Remove from ordering
+        $this->remove_link_weight($link);
+
+        switch ($move) {
+            case block_flexpagenav_model_link::MOVE_BEFORE:
+                // Link get reflink's weight
+                $link->set_weight($reflink->get_weight());
+
+                // Push weights up to make room
+                $DB->execute("
+                    UPDATE {block_flexpagenav_link}
+                       SET weight = (weight + 1)
+                     WHERE menuid = ?
+                       AND weight >= ?
+                ", array($reflink->get_menuid(), $reflink->get_weight()));
+
+
+                break;
+            case block_flexpagenav_model_link::MOVE_AFTER:
+                // Link gets reflink's weight + 1
+                $link->set_weight(($reflink->get_weight() + 1));
+
+                // Push weights up to make room
+                $DB->execute("
+                    UPDATE {block_flexpagenav_link}
+                       SET weight = (weight + 1)
+                     WHERE menuid = ?
+                       AND weight > ?
+                ", array($reflink->get_menuid(), $reflink->get_weight()));
+
+                break;
+        }
+        return $this;
+    }
+
+    /**
+     * Remove a link from the weight numbering
+     *
+     * @param block_flexpagenav_model_link $link
+     * @return void
+     */
+    protected function remove_link_weight(block_flexpagenav_model_link $link) {
+        global $DB;
+
+        $DB->execute('
+            UPDATE {block_flexpagenav_link}
+               SET weight = (weight - 1)
+             WHERE menuid = ?
+               AND weight > ?
+        ', array($link->get_menuid(), $link->get_weight()));
+
+        $link->set_weight(0);
     }
 }

@@ -7,6 +7,12 @@
  */
 class block_flexpagenav_model_link {
     /**
+     * Move constants
+     */
+    const MOVE_BEFORE = 0;
+    const MOVE_AFTER = 1;
+
+    /**
      * @var null|int
      */
     protected $id = null;
@@ -172,5 +178,18 @@ class block_flexpagenav_model_link {
         $linktype->set_link($this);
 
         return $linktype;
+    }
+
+    /**
+     * Link move options
+     *
+     * @static
+     * @return array
+     */
+    public static function get_move_options() {
+        return array(
+            self::MOVE_BEFORE => get_string('movebefore', 'block_flexpagenav'),
+            self::MOVE_AFTER  => get_string('moveafter', 'block_flexpagenav'),
+        );
     }
 }

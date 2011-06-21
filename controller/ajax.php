@@ -99,6 +99,31 @@ class block_flexpagenav_controller_ajax extends mr_controller {
     }
 
     /**
+     * Delete menu modal
+     */
+    public function deletemenu_action() {
+        $menuid = required_param('menuid', PARAM_INT);
+
+        $repo = new block_flexpagenav_repository_menu();
+        $menu = $repo->get_menu($menuid);
+
+        if (optional_param('confirmdelete', 0, PARAM_BOOL)) {
+            require_sesskey();
+
+            $repo->delete_menu($menu);
+
+        } else {
+            echo json_encode((object) array(
+                'header' => get_string('deletemenu', 'block_flexpagenav'),
+                'body'   => $this->output->delete_menu(
+                    $this->new_url(array('action' => 'deletemenu', 'sesskey' => sesskey(), 'confirmdelete' => 1, 'menuid' => $menu->get_id())),
+                    $menu
+                ),
+            ));
+        }
+    }
+
+    /**
      * Manage links modal
      */
     public function managelinks_action() {
@@ -161,6 +186,68 @@ class block_flexpagenav_controller_ajax extends mr_controller {
                 'header' => get_string('editingx', 'block_flexpagenav', $linktype->get_name()),
                 'body'   => $linktype->edit_form(
                     $this->new_url(array('action' => 'editlink', 'sesskey' => sesskey(), 'edit' => 1, 'menuid' => $menu->get_id(), 'linkid' => $linkid, 'type' => $link->get_type()))
+                ),
+            ));
+        }
+    }
+
+    /**
+     * Move link modal
+     */
+    public function movelink_action() {
+        $linkid = required_param('linkid', PARAM_INT);
+
+        $menurepo = new block_flexpagenav_repository_menu();
+        $linkrepo = new block_flexpagenav_repository_link();
+
+        $link = $linkrepo->get_link($linkid);
+        $linkrepo->set_link_configs($link);
+
+        $menu = $menurepo->get_menu($link->get_menuid());
+        $linkrepo->set_menu_links($menu);
+
+        if (optional_param('confirmmove', 0, PARAM_BOOL)) {
+            require_sesskey();
+
+            $move      = required_param('move', PARAM_INT);
+            $reflinkid = required_param('reflinkid', PARAM_INT);
+
+            $linkrepo->move_link($link, $move, $reflinkid)
+                     ->save_link($link);
+
+        } else {
+            echo json_encode((object) array(
+                'header' => get_string('movelink', 'block_flexpagenav'),
+                'body'   => $this->output->move_link(
+                    $this->new_url(array('action' => 'movelink', 'sesskey' => sesskey(), 'confirmmove' => 1, 'linkid' => $link->get_id())),
+                    $link,
+                    $menu
+                ),
+            ));
+        }
+    }
+
+    /**
+     * Delete link modal
+     */
+    public function deletelink_action() {
+        $linkid = required_param('linkid', PARAM_INT);
+
+        $repo = new block_flexpagenav_repository_link();
+        $link = $repo->get_link($linkid);
+        $repo->set_link_configs($link);
+
+        if (optional_param('confirmdelete', 0, PARAM_BOOL)) {
+            require_sesskey();
+
+            $repo->delete_link($link);
+
+        } else {
+            echo json_encode((object) array(
+                'header' => get_string('deletelink', 'block_flexpagenav'),
+                'body'   => $this->output->delete_link(
+                    $this->new_url(array('action' => 'deletelink', 'sesskey' => sesskey(), 'confirmdelete' => 1, 'linkid' => $link->get_id())),
+                    $link
                 ),
             ));
         }
