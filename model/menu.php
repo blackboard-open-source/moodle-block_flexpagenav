@@ -5,7 +5,7 @@
  * @author Mark Nielsen
  * @package block_flexpagenav
  */
-class block_flexpagenav_model_menu {
+class block_flexpagenav_model_menu implements renderable {
     /**
      * @var int
      */
@@ -162,9 +162,10 @@ class block_flexpagenav_model_menu {
      */
     public static function get_render_options() {
         return array(
-            'list' => get_string('list', 'block_flexpagenav'),
+            'tree' => get_string('tree', 'block_flexpagenav'),
             'select' => get_string('dropdown', 'block_flexpagenav'),
             'navhorizontal' => get_string('navhorizontal', 'block_flexpagenav'),
+            // 'navvertical' => get_string('navvertical', 'block_flexpagenav'),
         );
     }
 }

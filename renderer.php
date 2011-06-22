@@ -46,6 +46,21 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
     }
 
     /**
+     * Render the menu model
+     *
+     * @param block_flexpagenav_model_menu $menu
+     * @return string
+     */
+    public function render_block_flexpagenav_model_menu(block_flexpagenav_model_menu $menu) {
+        /** @var $render block_flexpagenav_lib_render_abstract */
+        $render = mr_helper::get('blocks/flexpagenav')->load(
+            'lib/render/'.$menu->get_render(),
+            array($menu)
+        );
+        return $render->output();
+    }
+
+    /**
      * @param moodle_url $submiturl
      * @param string|course_format_flexpage_lib_box $content
      * @return string

@@ -9,7 +9,7 @@
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="courseid"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>
         <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="courseid" NEXT="render"/>
-        <FIELD NAME="render" TYPE="char" LENGTH="10" NOTNULL="true" DEFAULT="list" SEQUENCE="false" PREVIOUS="name" NEXT="displayname"/>
+        <FIELD NAME="render" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="list" SEQUENCE="false" PREVIOUS="name" NEXT="displayname"/>
         <FIELD NAME="displayname" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Display the module name with the menu" PREVIOUS="render" NEXT="useastab"/>
         <FIELD NAME="useastab" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Use this menu as a top tab" PREVIOUS="displayname"/>
       </FIELDS>
