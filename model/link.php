@@ -38,6 +38,11 @@ class block_flexpagenav_model_link {
     protected $configs = array();
 
     /**
+     * @var block_flexpagenav_lib_link_abstract
+     */
+    protected $linktype;
+
+    /**
      * @param int|null $id
      * @return block_flexpagenav_model_link
      */
@@ -169,15 +174,15 @@ class block_flexpagenav_model_link {
      * @return block_flexpagenav_lib_link_abstract
      */
     public function load_type() {
-        $type = $this->get_type();
-        if (empty($type)) {
-            throw new coding_exception('Cannot load link type because type has not been set');
+        if (!$this->linktype instanceof block_flexpagenav_lib_link_abstract) {
+            $type = $this->get_type();
+            if (empty($type)) {
+                throw new coding_exception('Cannot load link type because type has not been set');
+            }
+            $this->linktype = mr_helper::get('blocks/flexpagenav')->load("lib/link/$type");
+            $this->linktype->set_link($this);
         }
-        /** @var $linktype block_flexpagenav_lib_link_abstract */
-        $linktype = mr_helper::get('blocks/flexpagenav')->load("lib/link/$type");
-        $linktype->set_link($this);
-
-        return $linktype;
+        return $this->linktype;
     }
 
     /**

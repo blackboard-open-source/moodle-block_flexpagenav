@@ -168,14 +168,10 @@ class block_flexpagenav_controller_ajax extends mr_controller {
                  ->set_menuid($menu->get_id())
                  ->set_weight($linkrepo->get_next_weight($link));
         }
-
-        /** @var $linktype block_flexpagenav_lib_link_abstract */
-        $linktype = $link->load_type();
-
         if (optional_param('edit', 0, PARAM_BOOL)) {
             require_sesskey();
 
-            $linktype->handle_form();
+            $link->load_type()->handle_form();
 
             $linkrepo->save_link($link)
                      ->save_link_config($link, $link->get_configs());
@@ -183,8 +179,8 @@ class block_flexpagenav_controller_ajax extends mr_controller {
         } else {
             echo json_encode((object) array(
                 'args'   => $link->get_type(),
-                'header' => get_string('editingx', 'block_flexpagenav', $linktype->get_name()),
-                'body'   => $linktype->edit_form(
+                'header' => get_string('editingx', 'block_flexpagenav', $link->load_type()->get_name()),
+                'body'   => $link->load_type()->edit_form(
                     $this->new_url(array('action' => 'editlink', 'sesskey' => sesskey(), 'edit' => 1, 'menuid' => $menu->get_id(), 'linkid' => $linkid, 'type' => $link->get_type()))
                 ),
             ));
@@ -251,5 +247,35 @@ class block_flexpagenav_controller_ajax extends mr_controller {
                 ),
             ));
         }
+    }
+
+    /**
+     * Special AJAX endpoint for Flexpage links.  Fetches
+     * child pages in a UL list with check boxes.
+     */
+    public function childpages_action() {
+        global $CFG;
+
+        require_once($CFG->dirroot.'/course/format/flexpage/locallib.php');
+
+        $pageid = required_param('pageid', PARAM_INT);
+        $linkid = required_param('linkid', PARAM_INT);
+
+        $exclude = array();
+        if (!empty($linkid)) {
+            $repo = new block_flexpagenav_repository_link();
+            $link = $repo->get_link($linkid);
+            $repo->set_link_configs($link);
+
+            $exclude = $link->get_config('exclude', array());
+            if (!empty($exclude)) {
+                $exclude = explode(',', $exclude);
+            }
+        }
+
+        $cache  = format_flexpage_cache();
+        $parent = $cache->get_page($pageid);
+
+        echo $this->output->child_pages_list($parent, $cache, $exclude);
     }
 }

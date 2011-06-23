@@ -76,6 +76,71 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
     }
 
     /**
+     * Create hierarchy of child pages
+     *
+     * @param course_format_flexpage_model_page $parent
+     * @param course_format_flexpage_model_cache $cache
+     * @param array $exclude
+     * @return closure|string
+     */
+    public function child_pages_list(course_format_flexpage_model_page $parent, course_format_flexpage_model_cache $cache, array $exclude) {
+        /**
+         * Little helper function to close li and ul tags
+         */
+        $closeliul = function($amount) {
+            $output = '';
+            for ($i = 0; $i < $amount; $i++) {
+                $output .= html_writer::end_tag('li');
+                $output .= html_writer::end_tag('ul');
+            }
+            return $output;
+        };
+
+        $lastpage = $parent;
+        $output   = '';
+        $opened   = 0;
+        foreach ($cache->get_pages() as $page) {
+            if ($cache->is_child_page($parent, $page)) {
+                // If not in exclude list, make sure parent isn't either
+                if (!in_array($page->get_id(), $exclude)) {
+                    if (in_array($page->get_parentid(), $exclude)) {
+                        $exclude[] = $page->get_id();
+                    }
+                }
+                $checkbox  = html_writer::checkbox('exclude[]', $page->get_id(), (!in_array($page->get_id(), $exclude)), format_string($page->get_display_name()));
+                $depth     = $cache->get_page_depth($page);
+                $lastdepth = $cache->get_page_depth($lastpage);
+
+                if ($depth > $lastdepth) {
+                    $opened++;
+                    $output .= html_writer::start_tag('ul');
+                    $output .= html_writer::start_tag('li');
+                    $output .= $checkbox;
+                } else if ($depth == $lastdepth) {
+                    $output .= html_writer::end_tag('li');
+                    $output .= html_writer::start_tag('li');
+                    $output .= $checkbox;
+
+                } else {
+                    if ($depth < $lastdepth) {
+                        $opened  = $opened - ($lastdepth - $depth);
+                        $output .= $closeliul(($lastdepth - $depth));
+                    }
+                    $output .= html_writer::start_tag('li');
+                    $output .= $checkbox;
+                }
+                $lastpage = $page;
+            }
+        }
+        if (empty($output)) {
+            $output = get_string('nochildpages', 'block_flexpagenav');
+        } else {
+            $output .= $closeliul($opened);
+        }
+        return $output;
+    }
+
+    /**
      * Manage menus modal content
      *
      * @param moodle_url $url
@@ -219,7 +284,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
                     'id'    => html_writer::random_id(),
                     'class' => 'block_flexpagenav_actions_select'
                 ));
-                $box->add_new_row()->add_new_cell(format_text($link->get_type()))
+                $box->add_new_row()->add_new_cell(format_text($link->load_type()->get_name()))
                                    ->add_new_cell($actionselect, array('id' => html_writer::random_id()))
                                    ->add_new_cell($link->load_type()->get_info());
             }

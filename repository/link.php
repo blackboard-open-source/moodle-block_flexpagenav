@@ -166,7 +166,7 @@ class block_flexpagenav_repository_link {
                 $record['id'] = $id;
                 $DB->update_record('block_flexpagenav_config', $record);
             } else {
-                $link->set_id(
+                $config->set_id(
                     $DB->insert_record('block_flexpagenav_config', $record)
                 );
             }

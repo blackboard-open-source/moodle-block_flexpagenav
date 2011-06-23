@@ -123,6 +123,57 @@ M.format_flexpage.init_editlink = function(Y, url) {
 
     M.format_flexpage.populate_panel(Y, dialog, url, function(type) {
         switch (type) {
+            case 'flexpage':
+                if (!Y.one('#id_children').get('checked')) {
+                    Y.one('.block_flexpagenav_exclude_row').addClass('hiddenifjs');
+                }
+                Y.one('#id_children').on('change', function(e) {
+                    if (e.target.get('checked')) {
+                        Y.one('.block_flexpagenav_exclude_row').removeClass('hiddenifjs');
+                    } else {
+                        Y.one('.block_flexpagenav_exclude_row').addClass('hiddenifjs');
+                    }
+                });
+
+                var populateChildren = function() {
+                    var courseid = Y.one('#editlinkpanel input[name=courseid]').get('value');
+                    var linkid   = Y.one('#editlinkpanel input[name=linkid]').get('value');
+                    var pageid   = Y.one('#id_pageid').get('value');
+                    var url      = M.cfg.wwwroot+'/blocks/flexpagenav/view.php?controller=ajax&action=childpages&pageid='+
+                                   pageid+'&linkid='+linkid+'&courseid='+courseid;
+
+                    Y.io(url, {
+                        on: {
+                            success: function(id, o) {
+                                Y.one('.block_flexpagenav_exclude_cell').set('innerHTML', o.responseText);
+                                if (Y.one('.block_flexpagenav_exclude_cell ul')) {
+                                    Y.one('.block_flexpagenav_exclude_cell ul').addClass('block_flexpagenav_exclude_firstul');
+                                }
+                                Y.all('.block_flexpagenav_exclude_cell input[type=checkbox]').on('change', function(e) {
+                                    var node = e.target;
+                                    if (!node.get('checked')) {
+                                        node.ancestor('li').all('input[type=checkbox]').set('checked', false);
+                                    } else {
+                                        var parent = node;
+                                        while((parent = parent.ancestor('li')) != null) {
+                                            parent.one('input[type=checkbox]').set('checked', true);
+                                        }
+                                    }
+                                });
+                            },
+                            failure: function(id, o) {
+                                M.format_flexpage.init_error_dialog(Y, M.str.format_flexpage.genericasyncfail);
+                            }
+                        }
+                    });
+                };
+
+                populateChildren();  // Populate for current selection
+                Y.one('#id_pageid').on('change', function(e) {
+                    populateChildren();
+                });
+                break;
+
             case 'url':
                 // Have required fields
                 dialog.validate = function() {
