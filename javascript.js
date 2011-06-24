@@ -16,6 +16,40 @@ M.format_flexpage.init_flexpagenav_actionbar = function(Y) {};
  * @param Y
  * @param url
  */
+M.format_flexpage.init_addexistingmenu = function(Y, url) {
+
+    var dialog = M.format_flexpage.init_default_dialog(Y, "addexistingmenupanel");
+
+    // Customize buttons
+    dialog.cfg.queueProperty("buttons", []);
+
+    M.format_flexpage.populate_panel(Y, dialog, url, function(buttons) {
+        M.format_flexpage.constrain_panel_to_viewport(Y, dialog);
+
+        var buttonGroup = M.format_flexpage.init_region_buttons(Y, buttons);
+
+        Y.all('#block_flexpagenav_addmenu_links a').on('click', function(e) {
+            e.preventDefault();
+
+            // Update our form so we know what the user selected
+            Y.one('input[name="menuid"]').set('value', e.target.get('name'));
+
+            // Update our form so we know what region was selected
+            M.format_flexpage.set_region_input(Y, buttonGroup, 'region');
+
+            dialog.submit();
+        });
+    });
+
+    return dialog;
+};
+
+/**
+ * Init manage menus modal (this opens other modals)
+ *
+ * @param Y
+ * @param url
+ */
 M.format_flexpage.init_managemenus = function(Y, url) {
 
     var panel = M.format_flexpage.init_default_panel(Y, "managemenuspanel");

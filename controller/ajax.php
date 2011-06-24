@@ -44,6 +44,39 @@ class block_flexpagenav_controller_ajax extends mr_controller {
     }
 
     /**
+     * Add existing menu modal
+     */
+    public function addexistingmenu_action() {
+        global $CFG, $COURSE;
+
+        require_once($CFG->dirroot.'/course/format/flexpage/lib.php');
+        require_once($CFG->dirroot.'/course/format/flexpage/lib/moodlepage.php');
+
+        if (optional_param('add', 0, PARAM_BOOL)) {
+            require_sesskey();
+
+            $menuid = optional_param('menuid', '', PARAM_INT);
+            $region = optional_param('region', false, PARAM_ACTION);
+            $page   = format_flexpage_cache()->get_current_page();
+
+            if (!empty($menuid)) {
+                course_format_flexpage_lib_moodlepage::add_menu_block($page, $menuid, $region);
+            }
+        } else {
+            $repo = new block_flexpagenav_repository_menu();
+
+            echo json_encode((object) array(
+                'args' => course_format_flexpage_lib_moodlepage::get_region_json_options(),
+                'header' => get_string('addexistingmenu', 'block_flexpagenav'),
+                'body' => $this->output->add_existing_menu(
+                    $this->new_url(array('sesskey' => sesskey(), 'action' => 'addexistingmenu', 'add' => 1)),
+                    $repo->get_course_menus($COURSE->id)
+                ),
+            ));
+        }
+    }
+
+    /**
      * Mange menus modal
      */
     public function managemenus_action() {

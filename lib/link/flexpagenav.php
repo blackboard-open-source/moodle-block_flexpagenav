@@ -68,8 +68,10 @@ class block_flexpagenav_lib_link_flexpagenav extends block_flexpagenav_lib_link_
     }
 
     public function add_nodes(navigation_node $root) {
+        $extrapop = false;
         if (empty(self::$menuids)) {
             array_push(self::$menuids, $this->get_link()->get_menuid());
+            $extrapop = true;
         }
         $menuid = $this->get_link()->get_config('menuid', 0);
         if (!empty($menuid) and !in_array($menuid, self::$menuids)) {
@@ -93,6 +95,9 @@ class block_flexpagenav_lib_link_flexpagenav extends block_flexpagenav_lib_link_
                 }
             } catch (Exception $e) {
             }
+            array_pop(self::$menuids);
+        }
+        if ($extrapop) {
             array_pop(self::$menuids);
         }
     }

@@ -70,3 +70,5 @@ $string['modlink'] = 'Course module';
 $string['ticketlink'] = 'Trouble Ticket';
 $string['subject'] = 'Subject';
 $string['labelrequired'] = 'The label field is required.';
+$string['menus'] = 'Menus';
+$string['addexistingmenu'] = 'Add existing menu';

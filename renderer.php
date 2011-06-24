@@ -142,6 +142,40 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
     }
 
     /**
+     * Add existing menu modal content
+     *
+     * @param moodle_url $sumiturl
+     * @param block_flexpagenav_model_menu[] $menus
+     * @return string
+     */
+    public function add_existing_menu(moodle_url $sumiturl, array $menus) {
+        $form = html_writer::start_tag('form', array('method' => 'post', 'action' => $sumiturl->out_omit_querystring())).
+                html_writer::input_hidden_params($sumiturl).
+                html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'region', 'value' => '')).
+                html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'menuid', 'value' => '')).
+                html_writer::tag('div', get_string('addto', 'format_flexpage'), array('class' => 'format_flexpage_addactivity_heading')).
+                html_writer::tag('div', '', array('id' => 'format_flexpage_region_radios')).
+                html_writer::end_tag('form');
+
+        $title = html_writer::tag('div', get_string('menus', 'block_flexpagenav').':', array('class' => 'format_flexpage_addactivity_heading'));
+
+        $box = new course_format_flexpage_lib_box();
+        $box->add_new_row()->add_new_cell($form);
+        $box->add_new_row()->add_new_cell($title);
+        $row = $box->add_new_row(array('id' => 'block_flexpagenav_addmenu_links'));
+
+        foreach ($menus as $menu) {
+            $link = clone($sumiturl);
+            $link->param('menuid', $menu->get_id());
+
+            $items[] = html_writer::link($link, format_string($menu->get_name()), array('name' => $menu->get_id()));
+        }
+        $row->add_new_cell(html_writer::alist($items));
+
+        return $this->render($box);
+    }
+
+    /**
      * Manage menus modal content
      *
      * @param moodle_url $url

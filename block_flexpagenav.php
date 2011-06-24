@@ -65,6 +65,26 @@ class block_flexpagenav extends block_base {
         return true;
     }
 
+    /**
+     * A way to associate a new instance with a menuid via session
+     *
+     * @return void
+     */
+    function instance_create() {
+        global $SESSION;
+
+        if (!empty($SESSION->block_flexpagenav_create_menuids)) {
+            $menuid = array_shift($SESSION->block_flexpagenav_create_menuids);
+            if (!empty($menuid)) {
+                $this->instance_config_save((object) array('menuid' => $menuid));
+            }
+            if (empty($SESSION->block_flexpagenav_create_menuids)) {
+                unset($SESSION->block_flexpagenav_create_menuids);
+            }
+        }
+        return true;
+    }
+
     function cron() {
         // @todo Clean tables where courseid no longer exists
     }
