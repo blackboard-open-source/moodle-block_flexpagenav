@@ -33,11 +33,7 @@ class block_flexpagenav_lib_link_url extends block_flexpagenav_lib_link_abstract
         return $this->get_renderer()->form_wrapper($submiturl, $box);
     }
 
-    public function add_nodes(navigation_node_collection $collection) {
-        $collection->add(new navigation_node(array(
-            'key'    => $this->get_link()->get_id(),
-            'text'   => $this->get_link()->get_config('label'),
-            'action' => $this->get_link()->get_config('url'),
-        )));
+    public function add_nodes(navigation_node $root) {
+        $root->add($this->get_link()->get_config('label'), $this->get_link()->get_config('url'), navigation_node::TYPE_CUSTOM, null, 'url_'.$this->get_link()->get_id());
     }
 }

@@ -13,7 +13,7 @@ require_once($CFG->dirroot.'/blocks/flexpagenav/lib/render/abstract.php');
 class block_flexpagenav_lib_render_select extends block_flexpagenav_lib_render_abstract {
 
     public function output() {
-        $content = $this->to_html($this->collection);
+        $content = $this->to_html($this->root->children);
         if (!empty($content)) {
             $content = $this->renderer->box($content, 'block_flexpagenav_dropdown_box', html_writer::random_id());
         }

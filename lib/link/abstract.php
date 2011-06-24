@@ -79,11 +79,11 @@ abstract class block_flexpagenav_lib_link_abstract {
     abstract public function edit_form(moodle_url $submiturl);
 
     /**
-     * Add navigational nodes to the collection
+     * Add navigational nodes to the root node
      *
      * @abstract
-     * @param navigation_node_collection $collection
+     * @param navigation_node $root
      * @return void
      */
-    abstract public function add_nodes(navigation_node_collection $collection);
+    abstract public function add_nodes(navigation_node $root);
 }

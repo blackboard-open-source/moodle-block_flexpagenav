@@ -67,7 +67,7 @@ class block_flexpagenav_lib_link_flexpagenav extends block_flexpagenav_lib_link_
         return $this->get_renderer()->form_wrapper($submiturl, $box);
     }
 
-    public function add_nodes(navigation_node_collection $collection) {
+    public function add_nodes(navigation_node $root) {
         if (empty(self::$menuids)) {
             array_push(self::$menuids, $this->get_link()->get_menuid());
         }
@@ -81,20 +81,16 @@ class block_flexpagenav_lib_link_flexpagenav extends block_flexpagenav_lib_link_
                 $menu = $menurepo->get_menu($menuid);
                 $linkrepo->set_menu_links($menu);
 
-                $node = new navigation_node(array(
-                    'key'    => 'menu_'.$menu->get_id(),
-                    'text'   => format_string($menu->get_name()),
-                ));
+                $node = $root->add(format_string($menu->get_name()), null, navigation_node::TYPE_CUSTOM, null, 'menu_'.$menu->get_id());
                 foreach ($menu->get_links() as $link) {
-                    $link->load_type()->add_nodes($node->children);
+                    $link->load_type()->add_nodes($node);
                 }
                 // Steal link for first child
                 foreach ($node->children as $childnode) {
                     $node->action = $childnode->action;
+                    $node->check_if_active(); // Re-run this since we just added the action
                     break;
                 }
-                $collection->add($node);
-
             } catch (Exception $e) {
             }
             array_pop(self::$menuids);

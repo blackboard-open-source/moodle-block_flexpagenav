@@ -17,9 +17,11 @@ abstract class block_flexpagenav_lib_render_abstract {
     protected $renderer;
 
     /**
-     * @var navigation_node_collection
+     * The root navigation node
+     *
+     * @var navigation_node
      */
-    protected $collection;
+    protected $root;
 
     /**
      * @param block_flexpagenav_model_menu $menu
@@ -30,18 +32,21 @@ abstract class block_flexpagenav_lib_render_abstract {
         $this->menu     = $menu;
         $this->renderer = $PAGE->get_renderer('block_flexpagenav');
 
-        $this->init_collection();
+        $this->init_root();
     }
 
     /**
-     * Initialize the navigation collection
+     * Initialize the root navigation node
      *
      * @return void
      */
-    public function init_collection() {
-        $this->collection = new navigation_node_collection();
+    public function init_root() {
+        $this->root = new navigation_node(array(
+            'key' => 'menu_'.$this->menu->get_id(),
+            'text' => format_string($this->menu->get_name()),
+        ));
         foreach ($this->menu->get_links() as $link) {
-            $link->load_type()->add_nodes($this->collection);
+            $link->load_type()->add_nodes($this->root);
         }
     }
 

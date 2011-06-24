@@ -15,7 +15,7 @@ require_once($CFG->dirroot.'/blocks/flexpagenav/lib/render/abstract.php');
 class block_flexpagenav_lib_render_tree extends block_flexpagenav_lib_render_abstract {
 
     public function output() {
-        $content = $this->to_html($this->collection, array('class' => 'block_tree list'));
+        $content = $this->to_html($this->root->children, array('class' => 'block_tree list'));
         if (!empty($content)) {
             $content = $this->renderer->box($content, 'block_tree_box', html_writer::random_id());
         }

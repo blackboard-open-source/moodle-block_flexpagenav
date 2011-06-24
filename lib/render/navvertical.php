@@ -16,7 +16,7 @@ class block_flexpagenav_lib_render_navvertical extends block_flexpagenav_lib_ren
     public function output() {
         global $PAGE;
 
-        $content = $this->to_html($this->collection);
+        $content = $this->to_html($this->root->children);
         if (!empty($content)) {
             $id = html_writer::random_id();
 

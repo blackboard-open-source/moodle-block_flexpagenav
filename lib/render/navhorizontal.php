@@ -17,7 +17,7 @@ class block_flexpagenav_lib_render_navhorizontal extends block_flexpagenav_lib_r
     public function output() {
         global $PAGE;
 
-        $content = $this->to_html($this->collection);
+        $content = $this->to_html($this->root->children);
         if (!empty($content)) {
             $id = html_writer::random_id();
 

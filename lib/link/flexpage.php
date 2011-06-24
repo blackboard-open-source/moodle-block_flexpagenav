@@ -77,20 +77,20 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
         return $renderer->form_wrapper($submiturl, $box);
     }
 
-    public function add_nodes(navigation_node_collection $collection) {
+    public function add_nodes(navigation_node $root) {
         try {
             $cache       = format_flexpage_cache();
             $page        = $cache->get_page($this->get_link()->get_config('pageid', 0));
             $parentnodes = array();
 
             if ($cache->is_page_in_menu($page) and $cache->is_page_available($page)) {
-                $collection->add(new navigation_node(array(
-                    'key'    => 'page_'.$page->get_id(),
-                    'text'   => format_string($page->get_display_name()),
-                    'action' => $page->get_url(),
-                )));
-                $parentnodes[$page->get_id()] = $collection->last();
+                $current       = $cache->get_current_page();
+                $activepageids = $cache->get_page_parents($current);
+                $activepageids = array_keys($activepageids);
 
+                $parentnodes[$page->get_id()] = $root->add(
+                    format_string($page->get_display_name()), $page->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$page->get_id()
+                );
 
                 if ($this->get_link()->get_config('children', 0)) {
                     $exclude = $this->get_link()->get_config('exclude', array());
@@ -118,11 +118,16 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                         if (!$cache->is_page_available($child)) {
                             continue;
                         }
-                        $parentnode = $parentnodes[$child->get_parentid()];
-                        $parentnodes[$child->get_id()] = $parentnode->add(
+                        $node = $parentnodes[$child->get_parentid()]->add(
                             format_string($child->get_display_name()), $child->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$child->get_id()
                         );
-                        // @todo Need to set active stuffs
+                        $parentnodes[$child->get_id()] = $node;
+
+                        if (in_array($child->get_id(), $activepageids)) {
+                            $node->force_open();
+                        } else if ($child->get_id() == $current->get_id()) {
+                            $node->make_active();
+                        }
                     }
                 }
             }
