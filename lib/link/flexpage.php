@@ -17,7 +17,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
 
     public function get_info() {
         try {
-            $page = format_flexpage_cache()->get_page($this->get_link()->get_config('pageid'));
+            $page = format_flexpage_cache()->get_page($this->get_link()->get_config('pageid', 0));
             $name = $this->get_renderer()->pad_page_name($page, 0, true);
 
             if ($this->get_link()->get_config('children', 0)) {
@@ -80,7 +80,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
     public function add_nodes(navigation_node_collection $collection) {
         try {
             $cache       = format_flexpage_cache();
-            $page        = $cache->get_page($this->get_link()->get_config('pageid'));
+            $page        = $cache->get_page($this->get_link()->get_config('pageid', 0));
             $parentnodes = array();
 
             if ($cache->is_page_in_menu($page) and $cache->is_page_available($page)) {
@@ -122,6 +122,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                         $parentnodes[$child->get_id()] = $parentnode->add(
                             format_string($child->get_display_name()), $child->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$child->get_id()
                         );
+                        // @todo Need to set active stuffs
                     }
                 }
             }

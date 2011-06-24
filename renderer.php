@@ -231,6 +231,8 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
      * @return string
      */
     public function manage_links(moodle_url $url, block_flexpagenav_model_menu $menu) {
+        global $PAGE;
+
         /** @var $types block_flexpagenav_lib_link_abstract[] */
         $types   = mr_helper::get('blocks/flexpagenav')->load('lib/link/**');
         $options = array();
@@ -290,7 +292,8 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
             }
             $output .= $this->render($box);
         }
-        return $output;
+        return $PAGE->get_renderer('local_mr')->render(new mr_html_notify('format_flexpage')).
+               $output;
     }
 
     /**

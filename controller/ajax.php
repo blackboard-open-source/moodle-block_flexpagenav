@@ -171,7 +171,11 @@ class block_flexpagenav_controller_ajax extends mr_controller {
         if (optional_param('edit', 0, PARAM_BOOL)) {
             require_sesskey();
 
-            $link->load_type()->handle_form();
+            try {
+                $link->load_type()->handle_form();
+            } catch (moodle_exception $e) {
+                $this->notify->add_string($e->getMessage());
+            }
 
             $linkrepo->save_link($link)
                      ->save_link_config($link, $link->get_configs());

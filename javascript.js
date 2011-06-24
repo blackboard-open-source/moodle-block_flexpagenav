@@ -199,6 +199,16 @@ M.format_flexpage.init_editlink = function(Y, url) {
                     e.target.removeClass('format_flexpage_error_bg');
                 });
                 break;
+
+            case 'flexpagenav':
+                if (Y.one('.block_flexpagenav_nomenus')) {
+                    // No menus to add, so change button and re-render
+                    dialog.cfg.queueProperty("buttons", [
+                        { text: M.str.moodle.cancel, handler: dialog.cancel, isDefault: true }
+                    ]);
+                    dialog.render();
+                }
+                break;
         }
     });
 
