@@ -65,3 +65,5 @@ $string['flexpagenavlink'] = 'Flexpage Menu';
 $string['flexpagenavx'] = '{$a} menu';
 $string['flexpagenaverror'] = 'Error: Flexpage menu probably does\'t exist';
 $string['nomenustoadd'] = 'There are no other Flexpage Menus that you can add to this menu.';
+$string['coursemodule'] = 'Course module';
+$string['modlink'] = 'Course module';

@@ -98,11 +98,6 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                         $exclude = explode(',', $exclude);
                     }
                     foreach ($cache->get_pages() as $child) {
-                        /**
-                         * @var navigation_node $node
-                         * @var navigation_node $parentnode
-                         */
-
                         if (in_array($child->get_id(), $exclude)) {
                             continue;
                         }
@@ -118,6 +113,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                         if (!$cache->is_page_available($child)) {
                             continue;
                         }
+                        /** @var $node navigation_node */
                         $node = $parentnodes[$child->get_parentid()]->add(
                             format_string($child->get_display_name()), $child->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$child->get_id()
                         );
