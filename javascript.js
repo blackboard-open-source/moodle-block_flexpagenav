@@ -209,6 +209,24 @@ M.format_flexpage.init_editlink = function(Y, url) {
                     dialog.render();
                 }
                 break;
+
+            case 'ticket':
+                // Have required fields
+                dialog.validate = function() {
+                    var data   = this.getData();
+                    if (data.label == "" || data.label == undefined) {
+                        Y.one('.format_flexpage_form input[name="label"]').addClass('format_flexpage_error_bg');
+                        M.format_flexpage.init_error_dialog(Y, M.str.block_flexpagenav.labelrequired);
+                        return false;
+                    }
+                    return true;
+                };
+
+                // Clears any validation error coloring
+                Y.all('.format_flexpage_form input[type="text"]').on('focus', function(e) {
+                    e.target.removeClass('format_flexpage_error_bg');
+                });
+                break;
         }
     });
 

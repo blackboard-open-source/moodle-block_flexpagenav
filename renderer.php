@@ -38,6 +38,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
                 array('cancel'),
                 array('addlinkdotdotdot', 'block_flexpagenav'),
                 array('labelurlrequired', 'block_flexpagenav'),
+                array('labelrequired', 'block_flexpagenav'),
                 array('movelink', 'block_flexpagenav'),
                 array('deletelink', 'block_flexpagenav'),
                 array('deletemenu', 'block_flexpagenav'),
