@@ -124,4 +124,29 @@ class block_flexpagenav_repository_menu {
         $menu->set_id(null)
              ->set_links(array());
     }
+
+    /**
+     * @param int $courseid
+     * @return void
+     */
+    public function delete_course_menus($courseid) {
+        global $DB;
+
+        $DB->execute('
+            DELETE c
+              FROM {block_flexpagenav_menu} m
+        INNER JOIN {block_flexpagenav_link} l ON m.id = l.menuid
+        INNER JOIN {block_flexpagenav_config} c ON l.id = c.linkid
+             WHERE m.courseid = ?
+        ', array($courseid));
+
+        $DB->execute('
+            DELETE l
+              FROM {block_flexpagenav_menu} m
+        INNER JOIN {block_flexpagenav_link} l ON m.id = l.menuid
+             WHERE m.courseid = ?
+        ', array($courseid));
+
+        $DB->delete_records('block_flexpagenav_menu', array('courseid' => $courseid));
+    }
 }

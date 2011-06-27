@@ -6,5 +6,4 @@
  * @package block_flexpagenav
  */
 
-$plugin->version = 2011050600;
-$plugin->cron    = (MINSECS * 30);
+$plugin->version = 2011050601;

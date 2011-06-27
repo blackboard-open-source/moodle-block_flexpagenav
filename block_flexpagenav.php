@@ -68,7 +68,7 @@ class block_flexpagenav extends block_base {
     /**
      * A way to associate a new instance with a menuid via session
      *
-     * @return void
+     * @return boolean
      */
     function instance_create() {
         global $SESSION;
@@ -83,9 +83,5 @@ class block_flexpagenav extends block_base {
             }
         }
         return true;
-    }
-
-    function cron() {
-        // @todo Clean tables where courseid no longer exists
     }
 }
