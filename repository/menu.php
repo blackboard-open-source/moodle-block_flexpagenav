@@ -54,6 +54,26 @@ class block_flexpagenav_repository_menu {
     }
 
     /**
+     * Get the menu that is used as the course's tabs
+     *
+     * @param int $courseid
+     * @return block_flexpagenav_model_menu|bool
+     */
+    public function get_course_tab_menu($courseid) {
+        global $DB;
+
+        $menu    = false;
+        $records = $DB->get_recordset('block_flexpagenav_menu', array('courseid' => $courseid, 'useastab' => 1));
+        foreach ($records as $record) {
+            $menu = $this->to_model($record);
+            break;
+        }
+        $records->close();
+
+        return $menu;
+    }
+
+    /**
      * @param block_flexpagenav_model_menu $menu
      * @return block_flexpagenav_repository_menu
      */
