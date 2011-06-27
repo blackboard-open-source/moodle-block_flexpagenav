@@ -186,6 +186,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
         $actions = array('editmenu', 'managelinks', 'deletemenu');
 
         $output = html_writer::empty_tag('input', array('id' => 'addmenu', 'type' => 'button', 'value' => get_string('addmenudotdotdot', 'block_flexpagenav')));
+        $output = html_writer::tag('div', $output, array('class' => 'block_flexpagenav_add_button'));
 
         if (!empty($menus)) {
             $box = new course_format_flexpage_lib_box(array('class' => 'format_flexpage_box_managepages'));
@@ -289,7 +290,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
             'id'    => html_writer::random_id(),
             'class' => 'block_flexpagenav_addlink_select'
         ));
-        $output = html_writer::tag('div', $output, array('id' => html_writer::random_id()));
+        $output = html_writer::tag('div', $output, array('id' => html_writer::random_id(), 'class' => 'block_flexpagenav_add_button'));
         $links  = $menu->get_links();
         if (!empty($links)) {
             $actions = array('editlink', 'movelink', 'deletelink');
