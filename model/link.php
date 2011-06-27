@@ -148,10 +148,8 @@ class block_flexpagenav_model_link {
                 return $this;
             }
         }
-        $config = new block_flexpagenav_model_link_config();
-        $config->set_linkid($this->get_id())
-               ->set_name($name)
-               ->set_value($value);
+        $config = new block_flexpagenav_model_link_config($name, $value);
+        $config->set_linkid($this->get_id());
 
         $this->add_config($config);
 

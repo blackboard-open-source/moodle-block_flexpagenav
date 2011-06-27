@@ -72,3 +72,4 @@ $string['subject'] = 'Subject';
 $string['labelrequired'] = 'The label field is required.';
 $string['menus'] = 'Menus';
 $string['addexistingmenu'] = 'Add existing menu';
+$string['migrationtoptabs'] = 'Course Top Tabs';

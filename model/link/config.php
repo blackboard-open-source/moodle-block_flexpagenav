@@ -27,6 +27,20 @@ class block_flexpagenav_model_link_config {
     protected $value;
 
     /**
+     * @param null|string $name
+     * @param null|string $value Name is required to set value
+     */
+    public function __construct($name = null, $value = null) {
+        if (!is_null($name)) {
+            $this->set_name($name);
+
+            if (!is_null($value)) {
+               $this->set_value($value);
+            }
+        }
+    }
+
+    /**
      * @param int $id
      * @return block_flexpagenav_model_link_config
      */
