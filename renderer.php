@@ -108,7 +108,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
                         $exclude[] = $page->get_id();
                     }
                 }
-                $checkbox  = html_writer::checkbox('exclude[]', $page->get_id(), (!in_array($page->get_id(), $exclude)), format_string($page->get_display_name()));
+                $checkbox  = html_writer::checkbox('exclude[]', $page->get_id(), (!in_array($page->get_id(), $exclude)), format_string($page->get_name()));
                 $depth     = $cache->get_page_depth($page);
                 $lastdepth = $cache->get_page_depth($lastpage);
 
