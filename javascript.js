@@ -228,7 +228,25 @@ M.format_flexpage.init_editlink = function(Y, url) {
                         M.format_flexpage.init_error_dialog(Y, M.str.block_flexpagenav.labelurlrequired);
                         return false;
                     }
-                    return true;
+                    var courseid = Y.one('#editlinkpanel input[name=courseid]').get('value');
+                    var url      = M.cfg.wwwroot+'/blocks/flexpagenav/view.php?controller=ajax&action=validateurl'+
+                                   '&courseid='+courseid+'&url='+data.url;
+                    Y.io(url, {
+                        timeout: 10000,
+                        sync: true,
+                        on: {
+                            success: function(id, o) {
+                                var response = Y.JSON.parse(o.responseText);
+                                if (response.error != '') {
+                                    Y.one('.format_flexpage_form input[name="url"]').addClass('format_flexpage_error_bg');
+                                    M.format_flexpage.init_error_dialog(Y, response.error);
+                                    failed = true;
+                                }
+                            }
+                        }
+                    });
+
+                    return !(failed);
                 };
 
                 // Clears any validation error coloring

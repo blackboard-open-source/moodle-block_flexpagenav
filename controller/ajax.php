@@ -315,4 +315,21 @@ class block_flexpagenav_controller_ajax extends mr_controller {
 
         echo $this->output->child_pages_list($parent, $cache, $exclude);
     }
+
+    /**
+     * Special AJAX endpoint for Flexpage links.  Validates
+     * as passed URL.
+     */
+    public function validateurl_action() {
+        $rawurl = required_param('url', PARAM_RAW);
+        $url    = required_param('url', PARAM_URL);
+
+        $error = '';
+        if ($rawurl != $url) {
+            $error = get_string('urlfailedcleaning', 'block_flexpagenav');
+        } else if (strpos($url, 'http://') !== 0 and strpos($url, 'https://') !== 0) {
+            $error = get_string('urlmuststartwith', 'block_flexpagenav');
+        }
+        echo json_encode((object) array('error' => $error));
+    }
 }

@@ -75,3 +75,5 @@ $string['addexistingmenu'] = 'Add existing menu';
 $string['migrationtoptabs'] = 'Course Top Tabs';
 $string['moderror'] = 'Error: Activity probably no longer exists';
 $string['noexistingmenustoadd'] = 'No menus have been created for this course.  Use <strong>Manage > Manage all menus</strong> to create new menus.';
+$string['urlfailedcleaning'] = 'The entered URL failed the validation and cleaning process.  Please ensure that the entered URL is valid.';
+$string['urlmuststartwith'] = 'The entered URL must start with either http:// or https://';
