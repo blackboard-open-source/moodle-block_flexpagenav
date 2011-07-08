@@ -96,6 +96,8 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                     $exclude = $this->get_link()->get_config('exclude', array());
                     if (!empty($exclude)) {
                         $exclude = explode(',', $exclude);
+                    } else {
+                        $exclude = array();
                     }
                     foreach ($cache->get_pages() as $child) {
                         if (in_array($child->get_id(), $exclude)) {
