@@ -83,7 +83,7 @@ class block_flexpagenav_lib_link_flexpagenav extends block_flexpagenav_lib_link_
                 $menu = $menurepo->get_menu($menuid);
                 $linkrepo->set_menu_links($menu);
 
-                $node = $root->add(format_string($menu->get_name()), null, navigation_node::TYPE_CUSTOM, null, 'menu_'.$menu->get_id());
+                $node = $root->add(format_string($menu->get_name()), null, navigation_node::TYPE_CUSTOM, null, 'menu_'.$menu->get_id().'_'.$this->get_link()->get_id());
                 foreach ($menu->get_links() as $link) {
                     $link->load_type()->add_nodes($node);
                 }

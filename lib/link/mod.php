@@ -65,7 +65,7 @@ class block_flexpagenav_lib_link_mod extends block_flexpagenav_lib_link_abstract
                 } else {
                     $icon = new pix_icon('icon', get_string('modulename', $cm->modname), $cm->modname);
                 }
-                $activitynode = $root->add(format_string($cm->name), $url, navigation_node::TYPE_CUSTOM, null, 'mod_'.$cm->id, $icon);
+                $activitynode = $root->add(format_string($cm->name), $url, navigation_node::TYPE_CUSTOM, null, 'mod_'.$cm->id.'_'.$this->get_link()->get_id(), $icon);
                 $activitynode->title(get_string('modulename', $cm->modname));
                 $activitynode->hidden = (!$cm->visible);  // @todo Should we not add if it's not visible?
             }

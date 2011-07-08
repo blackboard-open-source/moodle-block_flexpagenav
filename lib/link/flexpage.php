@@ -89,7 +89,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                 $activepageids = array_keys($activepageids);
 
                 $parentnodes[$page->get_id()] = $root->add(
-                    format_string($page->get_name()), $page->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$page->get_id()
+                    format_string($page->get_name()), $page->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$page->get_id().'_'.$this->get_link()->get_id()
                 );
 
                 if ($this->get_link()->get_config('children', 0)) {
@@ -117,7 +117,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                         }
                         /** @var $node navigation_node */
                         $node = $parentnodes[$child->get_parentid()]->add(
-                            format_string($child->get_name()), $child->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$child->get_id()
+                            format_string($child->get_name()), $child->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$child->get_id().'_'.$this->get_link()->get_id()
                         );
                         $parentnodes[$child->get_id()] = $node;
 
