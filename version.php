@@ -6,4 +6,4 @@
  * @package block_flexpagenav
  */
 
-$plugin->version = 2011050601;
+$plugin->version = 2011070800;
