@@ -20,7 +20,7 @@ M.format_flexpage.init_addexistingmenu = function(Y, url) {
 
     var dialog = M.format_flexpage.init_default_dialog(Y, "addexistingmenupanel");
 
-    // Customize buttons
+    // Remove buttons
     dialog.cfg.queueProperty("buttons", []);
 
     M.format_flexpage.populate_panel(Y, dialog, url, function(buttons) {
@@ -54,7 +54,7 @@ M.format_flexpage.init_managemenus = function(Y, url) {
 
     var dialog = M.format_flexpage.init_default_dialog(Y, "managemenuspanel");
 
-    // Customize buttons
+    // Remove buttons
     dialog.cfg.queueProperty("buttons", []);
 
     // When the user finally hides the dialog, we reload the page
@@ -281,6 +281,7 @@ M.format_flexpage.init_movelink = function(Y, url) {
 
     // Customize buttons
     dialog.cfg.queueProperty("buttons", [
+        { text: M.str.moodle.cancel, handler: dialog.cancel },
         { text: M.str.block_flexpagenav.movelink, handler: dialog.submit, isDefault: true }
     ]);
 

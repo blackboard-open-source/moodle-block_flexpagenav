@@ -74,4 +74,4 @@ $string['menus'] = 'Menus';
 $string['addexistingmenu'] = 'Add existing menu';
 $string['migrationtoptabs'] = 'Course Top Tabs';
 $string['moderror'] = 'Error: Activity probably no longer exists';
-$string['nomenustoadd'] = 'No menus have been created for this course.  Use <strong>Manage > Manage all menus</strong> to create new menus.';
+$string['noexistingmenustoadd'] = 'No menus have been created for this course.  Use <strong>Manage > Manage all menus</strong> to create new menus.';

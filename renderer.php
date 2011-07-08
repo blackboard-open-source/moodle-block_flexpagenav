@@ -151,7 +151,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
     public function add_existing_menu(moodle_url $sumiturl, array $menus) {
         // First check if we have any
         if (empty($menus)) {
-            return html_writer::tag('div', get_string('nomenustoadd', 'block_flexpagenav'));
+            return html_writer::tag('div', get_string('noexistingmenustoadd', 'block_flexpagenav'));
         }
         $form = html_writer::start_tag('form', array('method' => 'post', 'action' => $sumiturl->out_omit_querystring())).
                 html_writer::input_hidden_params($sumiturl).
