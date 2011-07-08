@@ -52,34 +52,37 @@ M.format_flexpage.init_addexistingmenu = function(Y, url) {
  */
 M.format_flexpage.init_managemenus = function(Y, url) {
 
-    var panel = M.format_flexpage.init_default_panel(Y, "managemenuspanel");
+    var dialog = M.format_flexpage.init_default_dialog(Y, "managemenuspanel");
 
-    // When the user finally hides the panel, we reload the page
-    panel.hideEvent.subscribe(function(e) {
+    // Customize buttons
+    dialog.cfg.queueProperty("buttons", []);
+
+    // When the user finally hides the dialog, we reload the page
+    dialog.hideEvent.subscribe(function(e) {
         if (M.format_flexpage.panel_stack.length == 0) {
             window.location.reload();
         }
     });
 
-    M.format_flexpage.populate_panel(Y, panel, url, function(args) {
-        M.format_flexpage.constrain_panel_to_viewport(Y, panel);
+    M.format_flexpage.populate_panel(Y, dialog, url, function(args) {
+        M.format_flexpage.constrain_panel_to_viewport(Y, dialog);
 
         var addButton = new YAHOO.widget.Button('addmenu');
         addButton.on("click", function (e) {
             var editMenuPanel = M.format_flexpage.init_editmenu(Y, args.addurl);
-            M.format_flexpage.connect_dialogs(Y, panel, editMenuPanel, function() {
+            M.format_flexpage.connect_dialogs(Y, dialog, editMenuPanel, function() {
                 return M.format_flexpage.init_managemenus(Y, url);
             });
         });
 
         Y.all('select.block_flexpagenav_actions_select').each(function(node) {
-            M.format_flexpage.init_action_menu(Y, node, panel, function() {
+            M.format_flexpage.init_action_menu(Y, node, dialog, function() {
                 return M.format_flexpage.init_managemenus(Y, url);
             });
         });
     });
 
-    return panel;
+    return dialog;
 };
 
 /**
