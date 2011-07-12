@@ -171,7 +171,7 @@ class block_flexpagenav_controller_ajax extends mr_controller {
         $linkrepo->set_menu_links($menu);
 
         echo json_encode((object) array(
-            'header' => get_string('managelinks', 'block_flexpagenav'),
+            'header' => get_string('managinglinksforx', 'block_flexpagenav', format_string($menu->get_name())),
             'body'   => $this->output->manage_links(
                 $this->new_url(),
                 $menu
