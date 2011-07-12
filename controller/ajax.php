@@ -82,11 +82,13 @@ class block_flexpagenav_controller_ajax extends mr_controller {
     public function managemenus_action() {
         global $COURSE;
 
-        $repo = new block_flexpagenav_repository_menu();
+        $repo   = new block_flexpagenav_repository_menu();
+        $header = get_string('managemenus', 'block_flexpagenav').'&nbsp;'.
+                  $this->output->flexpage_help_icon('managemenus', 'block_flexpagenav');
 
         echo json_encode((object) array(
             'args'   => (object) array('addurl' => $this->new_url(array('action' => 'editmenu'))->out(false)),
-            'header' => get_string('managemenus', 'block_flexpagenav'),
+            'header' => $header,
             'body'   => $this->output->manage_menus(
                 $this->new_url(),
                 $repo->get_course_menus($COURSE->id)
