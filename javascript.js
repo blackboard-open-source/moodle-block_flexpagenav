@@ -93,7 +93,23 @@ M.format_flexpage.init_managemenus = function(Y, url) {
  */
 M.format_flexpage.init_editmenu = function(Y, url) {
     var dialog = M.format_flexpage.init_default_dialog(Y, "editmenupanel");
-    M.format_flexpage.populate_panel(Y, dialog, url);
+
+    dialog.validate = function() {
+        var data = this.getData();
+        if (data.name == undefined || Y.Lang.trim(data.name) == "") {
+            Y.one('input[name="name"]').addClass('format_flexpage_error_bg');
+            M.format_flexpage.init_error_dialog(Y, M.str.block_flexpagenav.formnamerequired);
+            return false;
+        }
+        return true;
+    };
+
+    M.format_flexpage.populate_panel(Y, dialog, url, function() {
+        // Clears any validation error coloring
+        Y.one('input[name="name"]').on('focus', function(e) {
+            e.target.removeClass('format_flexpage_error_bg');
+        });
+    });
 
     return dialog;
 };

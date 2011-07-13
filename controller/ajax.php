@@ -113,7 +113,7 @@ class block_flexpagenav_controller_ajax extends mr_controller {
             require_sesskey();
 
             $menu->set_couseid($COURSE->id)
-                 ->set_name(required_param('name', PARAM_TEXT))
+                 ->set_name(trim(required_param('name', PARAM_TEXT)))
                  ->set_render(required_param('render', PARAM_ALPHA))
                  ->set_displayname(optional_param('displayname', 0, PARAM_BOOL))
                  ->set_useastab(optional_param('useastab', 0, PARAM_BOOL));

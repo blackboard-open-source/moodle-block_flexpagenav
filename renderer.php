@@ -42,6 +42,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
                 array('movelink', 'block_flexpagenav'),
                 array('deletelink', 'block_flexpagenav'),
                 array('deletemenu', 'block_flexpagenav'),
+                array('formnamerequired', 'block_flexpagenav'),
             )
         );
     }
