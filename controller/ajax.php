@@ -67,7 +67,7 @@ class block_flexpagenav_controller_ajax extends mr_controller {
 
             echo json_encode((object) array(
                 'args' => course_format_flexpage_lib_moodlepage::get_region_json_options(),
-                'header' => get_string('addexistingmenu', 'block_flexpagenav'),
+                'header' => $this->output->flexpage_help_icon('addexistingmenu', 'block_flexpagenav'),
                 'body' => $this->output->add_existing_menu(
                     $this->new_url(array('sesskey' => sesskey(), 'action' => 'addexistingmenu', 'add' => 1)),
                     $repo->get_course_menus($COURSE->id)
@@ -82,13 +82,11 @@ class block_flexpagenav_controller_ajax extends mr_controller {
     public function managemenus_action() {
         global $COURSE;
 
-        $repo   = new block_flexpagenav_repository_menu();
-        $header = get_string('managemenus', 'block_flexpagenav').'&nbsp;'.
-                  $this->output->flexpage_help_icon('managemenus', 'block_flexpagenav');
+        $repo = new block_flexpagenav_repository_menu();
 
         echo json_encode((object) array(
             'args'   => (object) array('addurl' => $this->new_url(array('action' => 'editmenu'))->out(false)),
-            'header' => $header,
+            'header' => $this->output->flexpage_help_icon('managemenus', 'block_flexpagenav'),
             'body'   => $this->output->manage_menus(
                 $this->new_url(),
                 $repo->get_course_menus($COURSE->id)

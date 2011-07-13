@@ -72,6 +72,7 @@ $string['subject'] = 'Subject';
 $string['labelrequired'] = 'The label field is required.';
 $string['menus'] = 'Menus';
 $string['addexistingmenu'] = 'Add existing menu';
+$string['addexistingmenu_help'] = 'Choose where you would like to place the block on the page by selecting one of the buttons on the top of the <strong>Add existing menu</strong> window. Next, click on the name of the menu that you would like to add to the course.';
 $string['migrationtoptabs'] = 'Course Top Tabs';
 $string['moderror'] = 'Error: Activity probably no longer exists';
 $string['noexistingmenustoadd'] = 'No menus have been created for this course.  Use <strong>Manage > Manage all menus</strong> to create new menus.';
