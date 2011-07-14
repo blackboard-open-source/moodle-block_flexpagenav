@@ -80,6 +80,7 @@ $string['urlfailedcleaning'] = 'The entered URL failed the validation and cleani
 $string['urlmuststartwith'] = 'The entered URL must start with either http:// or https://';
 $string['managinglinksforx'] = 'Managing links for menu <em>{$a}</em>';
 $string['formnamerequired'] = 'The menu name is required.';
+$string['invalidurl'] = 'The entered URL is invalid and cannot be used.  Please verify the entered URL.';
 
 $string['managemenus_help'] = '<p>Menus provide the navigation necessary for users to move through the pages of a course. Menus can be placed in any of the page regions as blocks. Menus can contain links to pages within the course, external URLs, and links to other menus.</p>
 

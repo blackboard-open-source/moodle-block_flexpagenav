@@ -329,6 +329,8 @@ class block_flexpagenav_controller_ajax extends mr_controller {
             $error = get_string('urlfailedcleaning', 'block_flexpagenav');
         } else if (strpos($url, 'http://') !== 0 and strpos($url, 'https://') !== 0) {
             $error = get_string('urlmuststartwith', 'block_flexpagenav');
+        } else if (@parse_url($url) === false) {
+            $error = get_string('invalidurl', 'block_flexpagenav');
         }
         echo json_encode((object) array('error' => $error));
     }
