@@ -55,7 +55,13 @@ abstract class block_flexpagenav_lib_link_abstract {
      */
     public function get_renderer() {
         global $PAGE;
-        return $PAGE->get_renderer('block_flexpagenav');
+
+        static $renderer = null;
+
+        if (is_null($renderer)) {
+            $renderer = $PAGE->get_renderer('block_flexpagenav');
+        }
+        return $renderer;
     }
 
     abstract public function get_info();
