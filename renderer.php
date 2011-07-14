@@ -299,7 +299,11 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
         $output = html_writer::tag('div', $output, array('id' => html_writer::random_id(), 'class' => 'block_flexpagenav_add_button'));
         $links  = $menu->get_links();
         if (!empty($links)) {
-            $actions = array('editlink', 'movelink', 'deletelink');
+            if (count($links) > 1) {
+                $actions = array('editlink', 'movelink', 'deletelink');
+            } else {
+                $actions = array('editlink', 'deletelink');
+            }
 
             $box = new course_format_flexpage_lib_box(array('class' => 'format_flexpage_box_managepages'));
             $row = $box->add_new_row(array('class' => 'format_flexpage_box_headers'));
