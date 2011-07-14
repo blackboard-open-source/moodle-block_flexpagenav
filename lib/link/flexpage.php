@@ -78,12 +78,15 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
     }
 
     public function add_nodes(navigation_node $root) {
+        global $COURSE;
+
         try {
             $cache       = format_flexpage_cache();
             $page        = $cache->get_page($this->get_link()->get_config('pageid', 0));
+            $modinfo     = get_fast_modinfo($COURSE);
             $parentnodes = array();
 
-            if ($cache->is_page_in_menu($page) and $cache->is_page_available($page)) {
+            if ($cache->is_page_in_menu($page) and ($availability = $page->is_available($modinfo)) !== false) {
                 $current       = $cache->get_current_page();
                 $activepageids = $cache->get_page_parents($current);
                 $activepageids = array_keys($activepageids);
@@ -91,6 +94,8 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                 $parent = $root->add(
                     format_string($page->get_name()), $page->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$page->get_id().'_'.$this->get_link()->get_id()
                 );
+                $parent->hidden = is_string($availability);
+
                 if ($page->get_id() == $current->get_id()) {
                     $parent->make_active();
                 }
@@ -116,13 +121,22 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                         if (!array_key_exists($child->get_parentid(), $parentnodes)) {
                             continue;
                         }
-                        if (!$cache->is_page_available($child)) {
+                        /** @var $parentnode navigation_node */
+                        $parentnode = $parentnodes[$child->get_parentid()];
+
+                        if ($parentnode->hidden) {
+                            continue;
+                        }
+                        $availability = $child->is_available($modinfo);
+
+                        if ($availability === false) {
                             continue;
                         }
                         /** @var $node navigation_node */
-                        $node = $parentnodes[$child->get_parentid()]->add(
+                        $node = $parentnode->add(
                             format_string($child->get_name()), $child->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$child->get_id().'_'.$this->get_link()->get_id()
                         );
+                        $node->hidden = is_string($availability);
                         $parentnodes[$child->get_id()] = $node;
 
                         if (in_array($child->get_id(), $activepageids)) {

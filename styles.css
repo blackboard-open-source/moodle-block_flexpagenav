@@ -28,6 +28,11 @@
     padding-right: 40px;
 }
 
+#page-course-view-flexpage.yui3-skin-sam .yui3-menuitem-content.dimmed_text,
+#page-course-view-flexpage.yui3-skin-sam .yui3-menu .yui3-menu .yui3-menuitem-content.dimmed_text {
+    color: #AAAAAA;
+}
+
 /** BELOW COPIED FROM blocks/settings/styles.css **/
 /** Renamed .block_settings to .block_flexpagenav **/
 

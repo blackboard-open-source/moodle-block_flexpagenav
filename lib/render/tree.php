@@ -56,6 +56,9 @@ class block_flexpagenav_lib_render_tree extends block_flexpagenav_lib_render_abs
             if ($item->isactive === true) {
                 $liclasses[] = 'current_branch';
             }
+            if ($item->hidden) {
+                $liclasses[] = 'dimmed_text';
+            }
             $liattr = array('class'=>join(' ',$liclasses));
             // class attribute on the div item which only contains the item content
             $divclasses = array('tree_item');

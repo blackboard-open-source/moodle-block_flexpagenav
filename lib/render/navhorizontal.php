@@ -43,10 +43,15 @@ class block_flexpagenav_lib_render_navhorizontal extends block_flexpagenav_lib_r
             if (!$node->display) {
                 continue;
             }
+            if ($node->hidden) {
+                $linkclass = ' dimmed_text';
+            } else {
+                $linkclass = '';
+            }
             if ($node->children->count()) {
                 // If the child has menus render it as a sub menu
                 $content .= html_writer::start_tag('li');
-                $content .= html_writer::link($node->action, $node->text, array('class' => 'yui3-menu-label', 'title' => $node->title));
+                $content .= html_writer::link($node->action, $node->text, array('class' => "yui3-menu-label$linkclass", 'title' => $node->title));
                 $content .= html_writer::start_tag('div', array('id' => html_writer::random_id(), 'class' => 'yui3-menu custom_menu_submenu'));
                 $content .= html_writer::tag('div', html_writer::tag('ul', $this->to_html($node->children)), array('class'=>'yui3-menu-content'));
                 $content .= html_writer::end_tag('div');
@@ -54,7 +59,7 @@ class block_flexpagenav_lib_render_navhorizontal extends block_flexpagenav_lib_r
             } else {
                 // The node doesn't have children so produce a final menuitem
                 $content .= html_writer::start_tag('li', array('class' => 'yui3-menuitem'));
-                $content .= html_writer::link($node->action, $node->text, array('class' => 'yui3-menuitem-content', 'title' => $node->title));
+                $content .= html_writer::link($node->action, $node->text, array('class' => "yui3-menuitem-content$linkclass", 'title' => $node->title));
                 $content .= html_writer::end_tag('li');
             }
         }
