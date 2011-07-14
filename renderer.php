@@ -239,7 +239,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
         $box = new course_format_flexpage_lib_box(array('class' => 'format_flexpage_form'));
 
         $box->add_new_row()->add_new_cell(html_writer::label(get_string('name', 'block_flexpagenav'), 'id_name'))
-                           ->add_new_cell(html_writer::empty_tag('input', array('id' => 'id_name', 'name' => 'name', 'type' => 'text', 'size' => 50, 'value' => $menu->get_name())));
+                           ->add_new_cell(html_writer::empty_tag('input', array('id' => 'id_name', 'name' => 'name', 'type' => 'text', 'size' => 50, 'maxlength' => 250, 'value' => $menu->get_name())));
 
         $box->add_new_row()->add_new_cell(html_writer::label(get_string('render', 'block_flexpagenav'), 'id_render'))
                            ->add_new_cell(html_writer::select(block_flexpagenav_model_menu::get_render_options(), 'render', $menu->get_render(), false, array('id' => 'id_render')));

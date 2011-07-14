@@ -24,6 +24,10 @@
     margin: 10px 0;
 }
 
+#managelinkspanel .hd {
+    padding-right: 40px;
+}
+
 /** BELOW COPIED FROM blocks/settings/styles.css **/
 /** Renamed .block_settings to .block_flexpagenav **/
 
