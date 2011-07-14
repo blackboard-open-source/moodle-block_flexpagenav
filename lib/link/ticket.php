@@ -29,7 +29,7 @@ class block_flexpagenav_lib_link_ticket extends block_flexpagenav_lib_link_abstr
 
     public function handle_form() {
         $this->get_link()->set_config('label', required_param('label', PARAM_TEXT))
-                         ->set_config('subject', optional_param('subject', '', PARAM_TEXT));
+                         ->set_config('subject', trim(optional_param('subject', '', PARAM_TEXT)));
     }
 
     public function edit_form(moodle_url $submiturl) {
