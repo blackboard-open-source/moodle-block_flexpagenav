@@ -33,10 +33,10 @@ class block_flexpagenav_lib_render_select extends block_flexpagenav_lib_render_a
             if (!$node->display) {
                 continue;
             }
-            $options[$node->action->out(true)] = $node->text;
+            $options[$node->action->out(false)] = $node->text;
 
-            if ($node->isactive and is_null($selected)) {
-                $selected   = $node->action->out(true);
+            if ($node->contains_active_node() and is_null($selected)) {
+                $selected   = $node->action->out(false);
                 $children[] = $this->to_html($node->children);
             }
         }
@@ -44,7 +44,7 @@ class block_flexpagenav_lib_render_select extends block_flexpagenav_lib_render_a
             // Have to write our own url_select because url_select only allows relative URLs
             $selectid = html_writer::random_id('url_select');
             $output   = html_writer::empty_tag('input', array('type'=>'hidden', 'name'=>'sesskey', 'value'=>sesskey()));
-            $output  .= html_writer::select($options, 'jump', $selected, array('' => 'choosedots'), array('id' => $selectid));
+            $output  .= html_writer::select($options, html_writer::random_id('jump'), $selected, array('' => 'choosedots'), array('id' => $selectid));
             $go       = html_writer::empty_tag('input', array('type'=>'submit', 'value'=>get_string('go')));
             $output  .= html_writer::tag('noscript', html_writer::tag('div', $go), array('style'=>'inline'));
             $output   = html_writer::tag('div', $output);

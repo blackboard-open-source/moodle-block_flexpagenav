@@ -88,9 +88,13 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                 $activepageids = $cache->get_page_parents($current);
                 $activepageids = array_keys($activepageids);
 
-                $parentnodes[$page->get_id()] = $root->add(
+                $parent = $root->add(
                     format_string($page->get_name()), $page->get_url(), navigation_node::TYPE_CUSTOM, null, 'page_'.$page->get_id().'_'.$this->get_link()->get_id()
                 );
+                if ($page->get_id() == $current->get_id()) {
+                    $parent->make_active();
+                }
+                $parentnodes[$page->get_id()] = $parent;
 
                 if ($this->get_link()->get_config('children', 0)) {
                     $exclude = $this->get_link()->get_config('exclude', array());
