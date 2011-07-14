@@ -18,7 +18,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
     public function get_info() {
         try {
             $page = format_flexpage_cache()->get_page($this->get_link()->get_config('pageid', 0));
-            $name = $this->get_renderer()->pad_page_name($page, 0, true);
+            $name = $this->get_renderer()->pad_page_name($page, null, true, 0);
 
             if ($this->get_link()->get_config('children', 0)) {
                 return get_string('flexpagewithchildren', 'block_flexpagenav', $name);
@@ -59,7 +59,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
 
         $options = array();
         foreach (format_flexpage_cache()->get_pages() as $page) {
-            $options[$page->get_id()] = $renderer->pad_page_name($page);
+            $options[$page->get_id()] = $renderer->pad_page_name($page, true);
         }
 
         $box = new course_format_flexpage_lib_box(array('class' => 'format_flexpage_form'));
