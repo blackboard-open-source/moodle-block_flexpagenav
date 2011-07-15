@@ -304,9 +304,9 @@ class block_flexpagenav_controller_ajax extends mr_controller {
             $link = $repo->get_link($linkid);
             $repo->set_link_configs($link);
 
-            $exclude = $link->get_config('exclude', array());
-            if (!empty($exclude)) {
-                $exclude = explode(',', $exclude);
+            $config = $link->get_config('exclude', array());
+            if (!empty($config)) {
+                $exclude = explode(',', $config);
             }
         }
 

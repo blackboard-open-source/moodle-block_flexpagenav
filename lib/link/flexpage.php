@@ -18,7 +18,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
     public function get_info() {
         try {
             $page = format_flexpage_cache()->get_page($this->get_link()->get_config('pageid', 0));
-            $name = $this->get_renderer()->pad_page_name($page, null, true, 0);
+            $name = $this->get_renderer()->pad_page_name($page, true, true, 0);
 
             if ($this->get_link()->get_config('children', 0)) {
                 return get_string('flexpagewithchildren', 'block_flexpagenav', $name);
