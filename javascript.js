@@ -149,6 +149,7 @@ M.format_flexpage.init_managelinks = function(Y, url) {
 
     M.format_flexpage.populate_panel(Y, panel, url, function() {
         M.format_flexpage.constrain_panel_to_viewport(Y, panel);
+        M.format_flexpage.init_link_info(Y);
 
         var button = M.format_flexpage.init_action_menu(Y, Y.one('select.block_flexpagenav_addlink_select'), panel, function() {
             return M.format_flexpage.init_managelinks(Y, url);
@@ -319,7 +320,9 @@ M.format_flexpage.init_movelink = function(Y, url) {
         { text: M.str.block_flexpagenav.movelink, handler: dialog.submit, isDefault: true }
     ]);
 
-    M.format_flexpage.populate_panel(Y, dialog, url);
+    M.format_flexpage.populate_panel(Y, dialog, url, function() {
+        M.format_flexpage.init_link_info(Y);
+    });
 
     return dialog;
 };
@@ -339,7 +342,24 @@ M.format_flexpage.init_deletelink = function(Y, url) {
         { text: M.str.block_flexpagenav.deletelink, handler: dialog.submit }
     ]);
 
-    M.format_flexpage.populate_panel(Y, dialog, url);
+    M.format_flexpage.populate_panel(Y, dialog, url, function() {
+        M.format_flexpage.init_link_info(Y);
+    });
 
     return dialog;
+};
+
+/**
+ * Make info links popup
+ * @param Y
+ */
+M.format_flexpage.init_link_info = function(Y) {
+    Y.all('.block_flexpagenav_linkinfo a').on('click', function(e) {
+        e.preventDefault();
+
+        var windowobj = window.open(e.target.get('href'), 'popup', 'height=600,width=1000,top=0,left=0,menubar=0,location=0,scrollbars,resizable,toolbar=0,status,directories=0,fullscreen=0,dependent');
+        if (windowobj) {
+            windowobj.focus();
+        }
+    });
 };

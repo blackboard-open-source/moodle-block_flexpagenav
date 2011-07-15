@@ -48,6 +48,14 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
     }
 
     /**
+     * @param block_flexpagenav_model_link $link
+     * @return string
+     */
+    public function link_info(block_flexpagenav_model_link $link) {
+        return html_writer::tag('span', $link->load_type()->get_info(), array('class' => 'block_flexpagenav_linkinfo'));
+    }
+
+    /**
      * Render the menu model
      *
      * @param block_flexpagenav_model_menu $menu
@@ -334,7 +342,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
                 ));
                 $box->add_new_row()->add_new_cell(format_text($link->load_type()->get_name()))
                                    ->add_new_cell($actionselect, array('id' => html_writer::random_id()))
-                                   ->add_new_cell($link->load_type()->get_info());
+                                   ->add_new_cell($this->link_info($link));
             }
             $output .= $this->render($box);
         }
@@ -360,7 +368,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
             }
             $options[$reflink->get_id()] = trim(strip_tags($reflink->load_type()->get_info()));
         }
-        $box->add_new_row()->add_new_cell(get_string('movelinkx', 'block_flexpagenav', $link->load_type()->get_info()))
+        $box->add_new_row()->add_new_cell(get_string('movelinkx', 'block_flexpagenav', $this->link_info($link)))
                            ->add_new_cell(html_writer::select(block_flexpagenav_model_link::get_move_options(), 'move', block_flexpagenav_model_link::MOVE_AFTER, false))
                            ->add_new_cell(html_writer::select($options, 'reflinkid', '', false));
 
@@ -375,7 +383,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
      * @return string
      */
     public function delete_link(moodle_url $submiturl, block_flexpagenav_model_link $link) {
-        $areyousure = get_string('areyousuredeletelink', 'block_flexpagenav', $link->load_type()->get_info());
+        $areyousure = get_string('areyousuredeletelink', 'block_flexpagenav', $this->link_info($link));
         return $this->form_wrapper($submiturl, html_writer::tag('div', $areyousure, array('class' => 'block_flexpagenav_deletelink')));
     }
 }
