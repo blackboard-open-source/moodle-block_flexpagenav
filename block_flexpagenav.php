@@ -51,7 +51,7 @@ class block_flexpagenav extends block_base {
                 $this->title = format_string($menu->get_name());
             }
         } catch (moodle_exception $e) {
-            debugging($e->getMessage(), DEBUG_DEVELOPER);
+            // debugging($e->getMessage(), DEBUG_DEVELOPER);
         }
         return $this->content;
     }
