@@ -56,7 +56,7 @@ $string['flexpage'] = 'Flexpage';
 $string['flexpagelink'] = 'Flexpage';
 $string['includechildren'] = 'Include children';
 $string['excludechildren'] = 'Children to include';
-$string['nochildpages'] = 'No child pages';
+$string['nochildpages'] = 'No child flexpages';
 $string['flexpagewithchildren'] = '{$a} with children';
 $string['flexpagewithoutchildren'] = '{$a} without children';
 $string['flexpageerror'] = 'Error: Flexpage probably no longer exists';
@@ -72,7 +72,7 @@ $string['subject'] = 'Subject';
 $string['labelrequired'] = 'The label field is required.';
 $string['menus'] = 'Menus';
 $string['addexistingmenu'] = 'Add existing menu';
-$string['addexistingmenu_help'] = 'Choose where you would like to place the block on the page by selecting one of the buttons on the top of the <strong>Add existing menu</strong> window. Next, click on the name of the menu that you would like to add to the course.';
+$string['addexistingmenu_help'] = 'Choose where you would like to place the block on the flexpage by selecting one of the buttons on the top of the <strong>Add existing menu</strong> window. Next, click on the name of the menu that you would like to add to the course.';
 $string['migrationtoptabs'] = 'Course Top Tabs';
 $string['moderror'] = 'Error: Activity probably no longer exists';
 $string['noexistingmenustoadd'] = 'No menus have been created for this course.  Use <strong>Manage > Manage all menus</strong> to create new menus.';
@@ -82,6 +82,6 @@ $string['managinglinksforx'] = 'Managing links for menu <em>{$a}</em>';
 $string['formnamerequired'] = 'The menu name is required.';
 $string['invalidurl'] = 'The entered URL is invalid and cannot be used.  Please verify the entered URL.';
 
-$string['managemenus_help'] = '<p>Menus provide the navigation necessary for users to move through the pages of a course. Menus can be placed in any of the page regions as blocks. Menus can contain links to pages within the course, external URLs, and links to other menus.</p>
+$string['managemenus_help'] = '<p>Menus provide the navigation necessary for users to move through the flexpages of a course. Menus can be placed in any of the flexpage regions as blocks. Menus can contain links to flexpages within the course, external URLs, and links to other menus.</p>
 
 <p>One of the menus in a course can also be marked as using "Tabs". This menu will appear as Top Tabs in the course. If you want each of the tabs to offer multiple options, create a Top Tab menu and link to a different Flexpage menu for each tab.</p>';
