@@ -42,7 +42,7 @@ class block_flexpagenav extends block_base {
 
             // @todo Can we put this inside of block_flexpagenav_lib_render_tree?
             if ($menu->get_render() == 'tree') {
-                $arguments = array('id' => $this->instance->id, 'instance' => $this->instance->id, 'candock' => true);
+                $arguments = array('id' => $this->instance->id, 'instance' => $this->instance->id, 'candock' => $this->instance_can_be_docked());
                 $this->page->requires->yui_module(array('core_dock', 'moodle-block_navigation-navigation'), 'M.block_navigation.init_add_tree', array($arguments));
             }
             $this->content->text = $renderer->render($menu);
@@ -66,10 +66,6 @@ class block_flexpagenav extends block_base {
 
     function instance_allow_multiple() {
         return true;
-    }
-    
-    function instance_can_be_docked() {
-        return false;
     }
 
     /**
