@@ -33,6 +33,10 @@ class block_flexpagenav extends block_base {
             if ($menu->get_displayname()) {
                 $this->title = format_string($menu->get_name());
             }
+        } else if ($this->user_can_edit()) {
+            $this->content->text = html_writer::tag(
+                'div', get_string('menudisplayerror', 'block_flexpagenav'), array('class' => 'block_flexpagenav_error')
+            );
         }
         return $this->content;
     }
@@ -125,6 +129,33 @@ class block_flexpagenav extends block_base {
     }
 
     /**
+     * Have to override so the menuid can be saved to table
+     */
+    function instance_config_save($data, $nolongerused = false) {
+        $this->save_menuid($data->menuid);
+        parent::instance_config_save($data, $nolongerused);
+    }
+
+    /**
+     * Save course menu ID to table.  Needed for queries.
+     *
+     * @param int $menuid
+     * @return void
+     */
+    function save_menuid($menuid) {
+        global $DB;
+
+        if ($id = $DB->get_field('block_flexpagenav', 'id', array('instanceid' => $this->instance->id))) {
+            $DB->set_field('block_flexpagenav', 'menuid', $menuid, array('id' => $id));
+        } else {
+            $DB->insert_record('block_flexpagenav', (object) array(
+                'instanceid' => $this->instance->id,
+                'menuid' => $menuid,
+            ));
+        }
+    }
+
+    /**
      * A way to associate a new instance with a menuid via session
      *
      * @return boolean
@@ -141,6 +172,19 @@ class block_flexpagenav extends block_base {
                 unset($SESSION->block_flexpagenav_create_menuids);
             }
         }
+        return true;
+    }
+
+    /**
+     * Clean table
+     *
+     * @return bool
+     */
+    function instance_delete() {
+        global $DB;
+
+        $DB->delete_records('block_flexpagenav', array('instanceid' => $this->instance->id));
+
         return true;
     }
 }

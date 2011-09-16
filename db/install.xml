@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="blocks/flexpagenav/db" VERSION="20110617" COMMENT="XMLDB file for flexpagenav block"
+<XMLDB PATH="blocks/flexpagenav/db" VERSION="20110916" COMMENT="XMLDB file for flexpagenav block"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="block_flexpagenav_menu" COMMENT="Flexpage menus" NEXT="block_flexpagenav_link">
+    <TABLE NAME="block_flexpagenav" COMMENT="Linked flexpage menus" NEXT="block_flexpagenav_menu">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="instanceid"/>
+        <FIELD NAME="instanceid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="menuid"/>
+        <FIELD NAME="menuid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="instanceid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="instanceid"/>
+        <KEY NAME="instanceid" TYPE="foreign" FIELDS="instanceid" REFTABLE="block_instances" REFFIELDS="id" PREVIOUS="primary" NEXT="menuid"/>
+        <KEY NAME="menuid" TYPE="foreign" FIELDS="menuid" REFTABLE="block_flexpagenav_menu" REFFIELDS="id" PREVIOUS="instanceid"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="block_flexpagenav_menu" COMMENT="Flexpage menus" PREVIOUS="block_flexpagenav" NEXT="block_flexpagenav_link">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="courseid"/>
         <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="name"/>

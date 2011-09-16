@@ -34,6 +34,10 @@
     color: #AAAAAA;
 }
 
+.block_flexpagenav_error {
+    color: red;
+}
+
 /** BELOW COPIED FROM blocks/settings/styles.css **/
 /** Renamed .block_settings to .block_flexpagenav **/
 

@@ -111,6 +111,18 @@ class block_flexpagenav_repository_menu {
     public function delete_menu(block_flexpagenav_model_menu $menu) {
         global $DB;
 
+        $instances = $DB->get_recordset_sql("
+            SELECT i.*
+              FROM {block_instances} i
+        INNER JOIN {block_flexpagenav} f ON i.id = f.instanceid
+             WHERE f.menuid = ?
+        ", array($menu->get_id()));
+
+        foreach ($instances as $instance) {
+            blocks_delete_instance($instance, true);
+        }
+        $instances->close();
+
         $DB->execute('
             DELETE c
               FROM {block_flexpagenav_link} l

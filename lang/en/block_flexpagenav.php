@@ -81,6 +81,7 @@ $string['urlmuststartwith'] = 'The entered URL must start with either http:// or
 $string['managinglinksforx'] = 'Managing links for menu <em>{$a}</em>';
 $string['formnamerequired'] = 'The menu name is required.';
 $string['invalidurl'] = 'The entered URL is invalid and cannot be used.  Please verify the entered URL.';
+$string['menudisplayerror'] = 'Could not display the associated Flexpage Menu.  The Flexpage Menu is either broken or no longer exists.  Please either delete this block or edit it to show a different Flexpage Menu.';
 
 $string['managemenus_help'] = '<p>Menus provide the navigation necessary for users to move through the flexpages of a course. Menus can be placed in any of the flexpage regions as blocks. Menus can contain links to flexpages within the course, external URLs, and links to other menus.</p>
 
