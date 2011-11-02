@@ -46,7 +46,9 @@ abstract class block_flexpagenav_lib_render_abstract {
             'text' => format_string($this->menu->get_name()),
         ));
         foreach ($this->menu->get_links() as $link) {
-            $link->load_type()->add_nodes($this->root);
+            if ($link->load_type()->has_dependencies()) {
+                $link->load_type()->add_nodes($this->root);
+            }
         }
     }
 

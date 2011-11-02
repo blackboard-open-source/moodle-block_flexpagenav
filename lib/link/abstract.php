@@ -64,6 +64,24 @@ abstract class block_flexpagenav_lib_link_abstract {
         return $renderer;
     }
 
+    /**
+     * Determine if the link has all of it's dependencies
+     *
+     * If not, then the link cannot be added, edited or
+     * displayed in menus.
+     *
+     * @return bool
+     */
+    public function has_dependencies() {
+        return true;
+    }
+
+    /**
+     * Get information about the link
+     *
+     * @abstract
+     * @return string
+     */
     abstract public function get_info();
 
     /**

@@ -11,6 +11,19 @@ require_once($CFG->dirroot.'/blocks/flexpagenav/lib/link/abstract.php');
  * @package block_flexpagenav
  */
 class block_flexpagenav_lib_link_ticket extends block_flexpagenav_lib_link_abstract {
+
+    public function has_dependencies() {
+        global $DB;
+
+        static $result = null;
+
+        if (is_null($result)) {
+            // Trouble ticket block must be installed and visible
+            $result = $DB->record_exists('block', array('name' => 'trouble_ticket', 'visible' => 1));
+        }
+        return $result;
+    }
+
     /**
      * @return moodle_url
      */

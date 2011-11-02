@@ -287,6 +287,9 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
         $types   = mr_helper::get('blocks/flexpagenav')->load('lib/link/**');
         $options = array();
         foreach ($types as $type) {
+            if (!$type->has_dependencies()) {
+                continue;
+            }
             $actionurl = clone($url);
             $actionurl->params(array(
                 'action' => 'editlink',
@@ -322,6 +325,9 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
             foreach ($links as $link) {
                 $options = array();
                 foreach ($actions as $action) {
+                    if ($action == 'editlink' and !$link->load_type()->has_dependencies()) {
+                        continue;
+                    }
                     $actionurl = clone($url);
                     $actionurl->params(array(
                         'action' => $action,
