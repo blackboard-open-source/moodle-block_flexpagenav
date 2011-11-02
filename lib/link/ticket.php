@@ -37,6 +37,9 @@ class block_flexpagenav_lib_link_ticket extends block_flexpagenav_lib_link_abstr
     }
 
     public function get_info() {
+        if (!$this->has_dependencies()) {
+            return $this->get_link()->get_config('label');
+        }
         return html_writer::link($this->get_url(), $this->get_link()->get_config('label'));
     }
 
