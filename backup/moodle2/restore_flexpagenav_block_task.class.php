@@ -9,6 +9,17 @@
  * @package format_flexpage
  */
 class restore_flexpagenav_block_task extends restore_default_block_task {
+
+    public function build() {
+        if (!$this->get_setting_value('overwrite_conf') and
+            ($this->get_target() == backup::TARGET_CURRENT_ADDING or
+             $this->get_target() == backup::TARGET_EXISTING_ADDING)) {
+            $this->built = true;
+        } else {
+            parent::build();
+        }
+    }
+
     /**
      * Need to remap menu IDs
      *
