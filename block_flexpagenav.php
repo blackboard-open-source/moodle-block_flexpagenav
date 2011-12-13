@@ -86,7 +86,13 @@ class block_flexpagenav extends block_base {
     }
 
     function user_can_addto($page) {
-        return has_capability('block/flexpagenav:manage', $page->context);
+        global $COURSE;
+        
+        if($COURSE->format == 'flexpage'){
+            return has_capability('block/flexpagenav:manage', $page->context);
+        } else {
+            return false;
+        }
     }
 
     function user_can_edit() {
