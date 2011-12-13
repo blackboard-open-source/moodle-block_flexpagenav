@@ -85,10 +85,8 @@ class block_flexpagenav extends block_base {
         }
     }
 
-    function user_can_addto($page) {
-        global $COURSE;
-        
-        if($COURSE->format == 'flexpage'){
+    function user_can_addto($page) {        
+        if($page->course->format == 'flexpage'){
             return has_capability('block/flexpagenav:manage', $page->context);
         } else {
             return false;
