@@ -87,8 +87,8 @@ $string['dockable'] = 'Allow this block to be docked';
 $string['dockable_help'] = 'Determine if this block can be docked by the user or not.  Please note though that docking can be disabled by the following exceptions:
 <ul>
     <li>Theme setting can prevent docking of blocks.</li>
-    <li>Only Flexpage Menus that display as Trees are dockable.</li>
-    <li>Blocks without titles are not dockable.</li>
+    <li>Only Flexpage Menus that display as Trees can be docked.</li>
+    <li>Blocks without titles cannot be docked.</li>
 </ul>';
 
 $string['managemenus_help'] = '<p>Menus provide the navigation necessary for users to move through the flexpages of a course. Menus can be placed in any of the flexpage regions as blocks. Menus can contain links to flexpages within the course, external URLs, and links to other menus.</p>
