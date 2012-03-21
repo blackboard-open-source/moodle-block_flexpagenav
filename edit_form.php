@@ -27,5 +27,9 @@ class block_flexpagenav_edit_form extends block_edit_form {
         }
         $mform->addElement('header', 'configheader', get_string('blocksettings', 'block'));
         $mform->addElement('select', 'config_menuid', get_string('displaymenu', 'block_flexpagenav'), $options);
+
+        $mform->addElement('advcheckbox', 'config_dockable', get_string('dockable', 'block_flexpagenav'));
+        $mform->addHelpButton('config_dockable', 'dockable', 'block_flexpagenav');
+        $mform->setDefault('config_dockable', '1');
     }
 }

@@ -60,11 +60,14 @@ class block_flexpagenav extends block_base {
      * @return bool
      */
     public function instance_can_be_docked() {
-        $menu = $this->get_flexpagenav_menu();
-        if ($menu and $menu->get_render() == 'tree') {
-            return true;
+        if (isset($this->config->dockable) and $this->config->dockable == '0') {
+            return false;
         }
-        return false;
+        $menu = $this->get_flexpagenav_menu();
+        if (!$menu or $menu->get_render() != 'tree') {
+            return false;
+        }
+        return parent::instance_can_be_docked();
     }
 
 
@@ -85,7 +88,7 @@ class block_flexpagenav extends block_base {
         }
     }
 
-    function user_can_addto($page) {        
+    function user_can_addto($page) {
         if($page->course->format == 'flexpage'){
             return has_capability('block/flexpagenav:manage', $page->context);
         } else {
