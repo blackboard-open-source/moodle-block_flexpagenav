@@ -33,7 +33,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
     public function handle_form() {
         $pageid   = required_param('pageid', PARAM_INT);
         $children = optional_param('children', 0, PARAM_INT);
-        $exclude  = optional_param('exclude', array(), PARAM_INT);
+        $exclude  = optional_param_array('exclude', array(), PARAM_INT);
 
         if ($children) {
             $cache   = format_flexpage_cache();
