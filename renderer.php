@@ -25,6 +25,7 @@
  * @see format_flexpage_renderer
  */
 require_once($CFG->dirroot.'/course/format/flexpage/renderer.php');
+require($CFG->dirroot.'/local/mr/bootstrap.php');
 
 /**
  * Plugin Renderer

@@ -21,6 +21,8 @@
  * @author Mark Nielsen
  */
 
+require($CFG->dirroot.'/local/mr/bootstrap.php');
+
 /**
  * Link Model
  *
