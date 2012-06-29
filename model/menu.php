@@ -96,7 +96,7 @@ class block_flexpagenav_model_menu implements renderable {
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @return block_flexpagenav_model_menu
      */
     public function set_id($id) {
@@ -145,6 +145,7 @@ class block_flexpagenav_model_menu implements renderable {
 
     /**
      * @param string $render
+     * @throws coding_exception
      * @return block_flexpagenav_model_menu
      */
     public function set_render($render) {

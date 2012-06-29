@@ -89,7 +89,7 @@
 /** Internet explorer specific rules **/
 .ie6 .block_flexpagenav .block_tree .tree_item {width:100%;}
 
-/** Overide for RTL layout **/
+/** Override for RTL layout **/
 .dir-rtl .block_flexpagenav .block_tree {padding-right:0px;}
 .dir-rtl .block_flexpagenav .block_tree li ul {padding-left:0;padding-right: 7px;}
 .dir-rtl .block_flexpagenav .block_tree li.item_with_icon > p img,
