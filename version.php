@@ -31,6 +31,8 @@
 $plugin->version      = 2011091602;
 $plugin->requires     = 2011120503;
 $plugin->component    = 'block_flexpagenav';
+$plugin->release      = '2.2.0 (Build: 20120629)';
+$plugin->maturity     = MATURITY_STABLE;
 $plugin->dependencies = array(
     'format_flexpage' => 2011062802,
     'local_mr'        => 2010090200,
