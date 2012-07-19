@@ -107,7 +107,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
             $modinfo     = get_fast_modinfo($COURSE);
             $parentnodes = array();
 
-            if ($cache->is_page_in_menu($page) and ($availability = $page->is_available($modinfo)) !== false) {
+            if ($cache->is_page_in_menu($page) and ($availability = $cache->is_page_available($page, $modinfo)) !== false) {
                 $current       = $cache->get_current_page();
                 $activepageids = $cache->get_page_parents($current);
                 $activepageids = array_keys($activepageids);
@@ -148,7 +148,7 @@ class block_flexpagenav_lib_link_flexpage extends block_flexpagenav_lib_link_abs
                         if ($parentnode->hidden) {
                             continue;
                         }
-                        $availability = $child->is_available($modinfo);
+                        $availability = $cache->is_page_available($child, $modinfo);
 
                         if ($availability === false) {
                             continue;
