@@ -28,6 +28,8 @@
  * @package block_flexpagenav
  */
 
+define('NO_DEBUG_DISPLAY', true);
+
 require_once('../../config.php');
 require($CFG->dirroot.'/local/mr/bootstrap.php');
 
