@@ -89,7 +89,7 @@ M.format_flexpage.init_managemenus = function(Y, url) {
     M.format_flexpage.populate_panel(Y, dialog, url, function(args) {
         M.format_flexpage.constrain_panel_to_viewport(Y, dialog);
 
-        var addButton = new YAHOO.widget.Button('addmenu');
+        var addButton = new Y.YUI2.widget.Button('addmenu');
         addButton.on("click", function (e) {
             var editMenuPanel = M.format_flexpage.init_editmenu(Y, args.addurl);
             M.format_flexpage.connect_dialogs(Y, dialog, editMenuPanel, function() {
