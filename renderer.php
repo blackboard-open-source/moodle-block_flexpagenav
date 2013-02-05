@@ -189,8 +189,7 @@ class block_flexpagenav_renderer extends format_flexpage_renderer {
                 html_writer::input_hidden_params($sumiturl).
                 html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'region', 'value' => '')).
                 html_writer::empty_tag('input', array('type' => 'hidden', 'name' => 'menuid', 'value' => '')).
-                html_writer::tag('div', get_string('addto', 'format_flexpage'), array('class' => 'format_flexpage_addactivity_heading')).
-                html_writer::tag('div', '', array('id' => 'format_flexpage_region_radios')).
+                $this->region_selector().
                 html_writer::end_tag('form');
 
         $title = html_writer::tag('div', get_string('menus', 'block_flexpagenav').':', array('class' => 'format_flexpage_addactivity_heading'));
