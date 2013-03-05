@@ -28,7 +28,7 @@
  * @package block_flexpagenav
  */
 
-$plugin->version      = 2011091602;
+$plugin->version      = 2013030500;
 $plugin->requires     = 2011120503;
 $plugin->component    = 'block_flexpagenav';
 $plugin->release      = '2.2.0 (Build: 20120629)';

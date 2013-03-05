@@ -31,6 +31,7 @@
 $string['pluginname'] = 'Flexpage Menu';
 $string['flexpagenav:view'] = 'View Flexpage Menus';
 $string['flexpagenav:manage'] = 'Manage Flexpage Menus';
+$string['flexpagenav:addinstance'] = 'Add a new Flexpage Menu block';
 $string['addexistingmenuaction'] = 'Add existing menu';
 $string['managemenusaction'] = 'Manage all menus';
 $string['managemenus'] = 'Manage menus';
