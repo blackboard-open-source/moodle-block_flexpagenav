@@ -78,7 +78,7 @@ class block_flexpagenav_controller_ajax extends mr_controller {
             require_sesskey();
 
             $menuid = optional_param('menuid', '', PARAM_INT);
-            $region = optional_param('region', false, PARAM_ACTION);
+            $region = optional_param('region', false, PARAM_ALPHANUMEXT);
             $page   = format_flexpage_cache()->get_current_page();
 
             if (!empty($menuid)) {
