@@ -29,11 +29,11 @@
  */
 
 $plugin->version      = 2013030500;
-$plugin->requires     = 2012120302;
+$plugin->requires     = 2013051401;
 $plugin->component    = 'block_flexpagenav';
-$plugin->release      = '2.4.0 (Build: 20130711)';
+$plugin->release      = '2.5.0 (Build: 20131227)';
 $plugin->maturity     = MATURITY_STABLE;
 $plugin->dependencies = array(
-    'format_flexpage' => 2012071900,
-    'local_mr'        => 2010090200,
+    'format_flexpage' => 2013080201,
+    'local_mr'        => 2010090201,
 );
