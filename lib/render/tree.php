@@ -37,7 +37,7 @@ require_once($CFG->dirroot.'/blocks/flexpagenav/lib/render/abstract.php');
 class block_flexpagenav_lib_render_tree extends block_flexpagenav_lib_render_abstract {
 
     public function output() {
-        $content = $this->to_html($this->root->children, array('class' => 'block_tree list'));
+        $content = $this->to_html($this->root->children, array('class' => 'block_tree list', 'role' => 'tree'));
         if (!empty($content)) {
             $content = $this->renderer->box($content, 'block_tree_box', html_writer::random_id());
         }
@@ -97,14 +97,18 @@ class block_flexpagenav_lib_render_tree extends block_flexpagenav_lib_render_abs
                 $divattr['id'] = $item->id;
             }
             $content = html_writer::tag('p', $content, $divattr) . $this->to_html($item->children);
+            //print_object($divattr);
             if (!empty($item->preceedwithhr) && $item->preceedwithhr===true) {
                 $content = html_writer::empty_tag('hr') . $content;
             }
+            $liattr['role'] = 'treeitem';
+            $liattr['aria-expanded'] = "false";
             $content = html_writer::tag('li', $content, $liattr);
             $lis[] = $content;
         }
 
         if (!empty($lis)) {
+            $attributes['role'] = "group";
             return html_writer::tag('ul', implode("\n", $lis), $attributes);
         } else {
             return '';

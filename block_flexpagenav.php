@@ -102,7 +102,9 @@ class block_flexpagenav extends block_base {
         if ($menu and $menu->get_render() == 'tree') {
             if ($this->instance_can_be_docked() && !$this->hide_header()) {
                 $arguments = array('id' => $this->instance->id, 'instance' => $this->instance->id, 'candock' => $this->instance_can_be_docked());
-                $this->page->requires->yui_module(array('core_dock', 'moodle-block_navigation-navigation'), 'M.block_navigation.init_add_tree', array($arguments));
+                $arguments2 = array('instanceid'=>$arguments['id']);
+                $this->page->requires->js_call_amd('block_flexpagenav/flexpagenav', 'init', $arguments2);
+                //$this->page->requires->yui_module(array('core_dock', 'moodle-block_navigation-navigation'), 'M.block_navigation.init_add_tree', array($arguments));
                 user_preference_allow_ajax_update('docked_block_instance_'.$this->instance->id, PARAM_INT);
             }
         } else {
