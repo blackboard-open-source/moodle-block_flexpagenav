@@ -106,11 +106,11 @@
 }
 
 .block_flexpagenav  [aria-expanded="true"] .tree_item.branch {
-    background-image: url('[[pix:t/expanded]]') !important;
+    background-image: url('[[pix:t/expanded]]');
     background-repeat: no-repeat;
 }
 
 .block_flexpagenav [aria-expanded="false"] .tree_item.branch {
-    background-image: url('[[pix:t/collapsed]]') !important;
+    background-image: url('[[pix:t/collapsed]]');
     background-repeat: no-repeat;
 }
