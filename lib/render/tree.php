@@ -97,7 +97,6 @@ class block_flexpagenav_lib_render_tree extends block_flexpagenav_lib_render_abs
                 $divattr['id'] = $item->id;
             }
             $content = html_writer::tag('p', $content, $divattr) . $this->to_html($item->children);
-            //print_object($divattr);
             if (!empty($item->preceedwithhr) && $item->preceedwithhr===true) {
                 $content = html_writer::empty_tag('hr') . $content;
             }
