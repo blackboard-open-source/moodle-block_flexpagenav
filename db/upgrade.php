@@ -25,7 +25,6 @@ function xmldb_block_flexpagenav_upgrade($oldversion=0) {
     global $DB;
 
     $dbman  = $DB->get_manager();
-    $result = true;
 
     if ($oldversion < 2011091600) {
 
@@ -66,5 +65,5 @@ function xmldb_block_flexpagenav_upgrade($oldversion=0) {
         upgrade_block_savepoint(true, 2011091602, 'flexpagenav');
     }
 
-    return $result;
+    return true;
 }
