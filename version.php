@@ -28,12 +28,12 @@
  * @package block_flexpagenav
  */
 
-$plugin->version      = 2017063000;
+$plugin->version      = 2017120800;
 $plugin->requires     = 2017051500;
 $plugin->component    = 'block_flexpagenav';
-$plugin->release      = '3.3.1';
+$plugin->release      = '3.3.3';
 $plugin->maturity     = MATURITY_STABLE;
 $plugin->dependencies = array(
-    'format_flexpage' => 2017063000,
-    'local_mr'        => 2017063000,
+    'format_flexpage' => 2017120800,
+    'local_mr'        => 2017120800,
 );
