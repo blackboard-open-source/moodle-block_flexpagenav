@@ -117,3 +117,4 @@ $string['dockable_help'] = 'Determine if this block can be docked by the user or
 $string['managemenus_help'] = '<p>Menus provide the navigation necessary for users to move through the flexpages of a course. Menus can be placed in any of the flexpage regions as blocks. Menus can contain links to flexpages within the course, external URLs, and links to other menus.</p>
 
 <p>One of the menus in a course can also be marked as using "Tabs". This menu will appear as Top Tabs in the course. If you want each of the tabs to offer multiple options, create a Top Tab menu and link to a different Flexpage menu for each tab.</p>';
+$string['privacy:metadata'] = 'The Flexpage Menu plugin does not store any personal data.';
